@@ -146,7 +146,7 @@ def initDT(dtDict):
 # map from symbolic names of coils, direct inputs, input registers to the
 # index in the tankState array that holds the values
 # Added coils 2 and 3, and register 1
-coilMap =  {'INPUT':0,'OUTPUT':1, 'HCL':2, 'NAHSO4':3}
+coilMap =  {'INPUT':0,'OUTPUT':1, 'HCL':2, 'NAHSO3':3}
 inputMap = {'BRB':0,'DRAIN':1,'HIGH':2,'LOW':3}
 registerMap = {'LEVEL':0, 'PH':1}
 
@@ -155,7 +155,7 @@ registerMap = {'LEVEL':0, 'PH':1}
     coils[0] is control to INPUT
     coils[1] is control to OUTPUT
     coils[2] is control to HCL
-    coils[3] is control to NAHSO4
+    coils[3] is control to NAHSO3
     inputs[0] is state of BRB
     inputs[1] is state of drain button
     inputs[2] is state of 'high' sensor
