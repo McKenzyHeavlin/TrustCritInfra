@@ -239,8 +239,10 @@ def update_tank_state(context):
     tankState['inputs'][inputMap['HIGH']] = 1 if highLevel <= level else 0
     tankState['inputs'][inputMap['LOW']] = 1 if lowLevel <= level else 0
 
-    # tankState['inputs'][inputMap['BRB']] = 1 if brb==1 else 0
-    # tankState['inputs'][inputMap['DRAIN']] = 1 if drain==1 else 0
+
+    # change the pH only if HCL is on (1)
+    # change the pH only if NAHSO3 is on (1)
+
 
 async def updating_task(context):
     """Update values in server.
@@ -307,7 +309,7 @@ async def updating_task(context):
         # the input register may have changed
         context[slave_id].setValues(rd_reg_as_hex, rd_reg_address, tankState['registers'])
 
-        txt = f"updating_task: updated coil values: {tankState['coils']!s}, input values {tankState['inputs']!s}, register values {tankState['registers']!s}" 
+        # txt = f"updating_task: updated coil values: {tankState['coils']!s}, input values {tankState['inputs']!s}, register values {tankState['registers']!s}" 
         #print(txt)
         #_logger.debug(txt)
 
