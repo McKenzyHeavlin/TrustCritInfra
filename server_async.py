@@ -71,14 +71,17 @@ def setup_server(description=None, context=None, cmdline=None):
     if context:
         args.context = context
     datablock = None
+    print(args.context)
     if not args.context:
         _logger.info("### Create datastore")
         # The datastores only respond to the addresses that are initialized
         # If you initialize a DataBlock to addresses of 0x00 to 0xFF, a request to
         # 0x100 will respond with an invalid address exception.
         # This is because many devices exhibit this kind of behavior (but not all)
+        print("Creating datastore")
         if args.store == "sequential":
             # Continuing, use a sequential block without gaps.
+            print("Creating sequential datastore")
             datablock = lambda : ModbusSequentialDataBlock(0x00, [17] * 100)  # pylint: disable=unnecessary-lambda-assignment
         elif args.store == "sparse":
             # Continuing, or use a sparse DataBlock which can have gaps
@@ -141,6 +144,7 @@ def setup_server(description=None, context=None, cmdline=None):
 
 async def run_async_server(args):
     """Run server."""
+    print("Starting run_async_server")
     txt = f"### start ASYNC server, listening on {args.port} - {args.comm}"
     _logger.info(txt)
     server = None

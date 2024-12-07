@@ -130,100 +130,18 @@ async def run_a_few_calls(client):
         prev_level = 0
         inputGuessRate = 0
         outputGuessRate = 0
-        update = 5.0
+        update = 3.0
         avg_flow_out = 0
 
         while True:
             await asyncio.sleep(update)
 
             # Get current state of the system from the coils and registers
-            rr = await client.read_coils(0, 2, slave=1)
+            rr = await client.read_coils(0, 1, slave=1)
             output_coils = rr.bits
-            rr = await client.read_discrete_inputs(3, 4, slave=1)
-            discrete_inputs = rr.bits
-            rr = await client.read_holding_registers(8, 1, slave=1)
-            registers = rr.registers
-
-            prev_input_coil_value = output_coils[0]
-            prev_output_coil_value = output_coils[1]
-            current_level = registers[0]
-
-            input_coil_value = False
-            output_coil_value = False
-            # Logic for checking/printing unofficial alerts
-            if discrete_inputs[2]:
-                print(f"\t*** WARNING: Tank Level Above HIGH Threshold at {registers[0]}.")
-                if not output_coils[0] and registers[0] == 1000:
-                    print(f"ALERT: Tank Level at Capacity at 1000 Levels.")
-            if not discrete_inputs[3]:
-                print(f"\t*** WARNING: Tank Level Below LOW Threshold at {registers[0]}.")
-                if not output_coils[1] and registers[0] == 0:
-                    print("!!! ALERT: Tank Level is Empty at 0 Levels.")
-
-            # Logic for setting the input/output coils
-            if discrete_inputs[0] and discrete_inputs[1]:
-                if guard:
-                    if (current_level - prev_level) >= 0:
-                        inputGuessRate = (current_level - prev_level) / update
-                    else:
-                        outputGuessRate = (current_level - prev_level) / update
-                if prev_input_coil_value:
-                    if (avg_flow_out + inputGuessRate*update)/2 < 0.45*outputGuessRate:
-                        input_coil_value = prev_input_coil_value
-                        output_coil_value = not prev_input_coil_value
-                        avg_flow_out = (avg_flow_out + inputGuessRate*update)/2
-                    elif (avg_flow_out + inputGuessRate*update)/2 > 0.55*outputGuessRate:
-                        input_coil_value = not prev_input_coil_value
-                        output_coil_value = prev_input_coil_value
-                        avg_flow_out = (avg_flow_out + inputGuessRate*update)/2
-                elif prev_output_coil_value:
-                    if (avg_flow_out + outputGuessRate*update)/2 > 0.55*outputGuessRate:
-                        input_coil_value = not prev_output_coil_value
-                        output_coil_value = prev_output_coil_value
-                        avg_flow_out = (avg_flow_out + inputGuessRate*update)/2
-                    elif (avg_flow_out + outputGuessRate*update)/2 < 0.45*outputGuessRate:
-                        input_coil_value = prev_output_coil_value
-                        output_coil_value = not prev_output_coil_value
-                        avg_flow_out = (avg_flow_out + inputGuessRate*update)/2
-                elif discrete_inputs[2]:
-                    input_coil_value = 0
-                    output_coil_value = 1
-                    avg_flow_out = (avg_flow_out + outputGuessRate*update)/2
-                elif not discrete_inputs[3]:
-                    input_coil_value = 1
-                    output_coil_value = 0
-                    avg_flow_out = (avg_flow_out + inputGuessRate*update)/2
-                else:
-                    print("\t*** WARNING: BRB and DRAIN set but discrete input combination not recognized.")
-            elif discrete_inputs[0]: 
-                avg_flow_out = 0 # BRB and DRAIN not pushed, so reset avg_flow_out to prep for next time
-                if not discrete_inputs[2]:
-                    # print("BRB AND NOT HIGH")
-                    input_coil_value = True
-                    output_coil_value = False
-                else:
-                    input_coil_value = False
-                    output_coil_value = True
-            elif discrete_inputs[1]:
-                avg_flow_out = 0 # BRB and DRAIN not pushed, so reset avg_flow_out to prep for next time
-                if discrete_inputs[3]:
-                    # print("DRAIN AND LOW")
-                    input_coil_value = False
-                    output_coil_value = True
-                else:
-                    input_coil_value = True
-                    output_coil_value = False
-
-            # Enforce restriction that input and output valves cannot be open simultaneously
-            if input_coil_value == output_coil_value and input_coil_value:
-                print("!!! ALERT: Attempted to open input and output valves simultaneously. Resetting coils to previous values.")
-                input_coil_value = prev_input_coil_value
-                output_coil_value = prev_output_coil_value
-            
-            prev_level = current_level
-            guard = True
-            await client.write_coil(0, input_coil_value, slave=1)
-            await client.write_coil(1, output_coil_value, slave=1)
+            print(output_coils[0]) 
+  
+            await client.write_coil(0, not output_coils[0], slave=1)
 
     except ModbusException:
         pass

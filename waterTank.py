@@ -57,45 +57,32 @@ from pymodbus.datastore import (
 _logger = logging.getLogger(__name__)
 
 dtDict = {}
+tankState = {}
 argFile = ""
 slave_id = 0x00
 
 # global for acess by both setup and update
 rd_reg_cnt = 2             # number of input registers used, CHANGED FOR PROJECT
-rd_output_coil_cnt = 4      # number of output coils used, CHANGED FOR PROJECT
-rd_direct_input_cnt = 4       # number of direct inputs
+rd_output_coil_cnt = 1      # number of output coils used, CHANGED FOR PROJECT
+rd_direct_input_cnt = 1      # number of direct inputs
 
 rd_output_coil_address = 0
 rd_direct_input_address = rd_output_coil_address+rd_output_coil_cnt + 1
+# rd_direct_input_address = 0
 rd_reg_address = rd_direct_input_address+rd_direct_input_cnt+1
 
 # 'input' parameters
-brb = 0                 # initial state of the Big Red Button 
-drain = 0               # initial state of the Drain button
-tankLevels = 1000       # largest number of tank level units
-inputRate = 10.0        # flow rate of input when on
-outputRate = 7.5        # drain rate of output when on 
-level = 500             # current level of the tank
-highLevel = 900         # position of the 'high' sensor           
-lowLevel = 100          # position of the 'low' sensor
 update = 1.0            # number of seconds @ tank update
 port = 5020             # TCP over which 
 pH = 7                  # pH level of the water, added for the project
+hcl = 0                 # State of hcl release. 0 = off, 1 = on 
+
+
 
 updates = 0
 def initDT(dtDict):
     global inputRate, outputRate, port, update, brb, drain
     global tankLevels, level, highLevel, lowLevel, pH
-
-    if 'inputRate' in dtDict:
-        inputRate = dtDict['inputRate']
-
-    assert inputRate >= 0.0, "inputRate should be non-negative"
-
-    if 'outputRate' in dtDict:
-        outputRate = dtDict['outputRate']
-
-    assert outputRate >= 0.0, "outputRate should be non-negative"
 
     if updates==0 and 'port' in dtDict:
         port = dtDict['port']
@@ -107,141 +94,98 @@ def initDT(dtDict):
 
     assert 0.0 < update < 10.0, "update should be positive and less than 10 seconds"
 
-    if 'brb' in dtDict:
-        brb = dtDict['brb']
-
-    assert brb==0 or brb==1, "BRB value should be 0 or 1"
-
-    if 'drain' in dtDict:
-        drain = dtDict['drain']
-
-    assert drain==0 or drain==1, "Drain value should be 0 or 1"
-
-    if updates==0 and 'tankLevels' in dtDict:
-        tankLevels = dtDict['tankLevels']
-
-    assert 10 <= tankLevels <= 1000, "tankLevel should be in [10,1000]"
-
-    if updates==0 and 'level' in dtDict:
-        level = dtDict['level']
-
-    assert 0 <= level <= tankLevels, "initial level should be in [0,{}]".format(tankLevels)
-
-    if updates==0 and 'highLevel' in dtDict:
-        highLevel = dtDict['highLevel']
-
-    assert 0 < highLevel <= tankLevels, "highLevel should be in (0,{}]".format(tankLevels)
-
-    if updates==0 and 'lowLevel' in dtDict:
-        lowLevel = dtDict['lowLevel']
-
-    assert 0 < lowLevel < highLevel, "highLevel should be in (0,{}]".format(highLevel)
-
     # ADDITIONS FOR THE PROJECT
     if 'pH' in dtDict:
         pH = dtDict['pH']
     
     assert 0 <= pH <= 14, "water pH should be in [0, 14]"
 
+    if 'HCl' in dtDict:
+        hcl = dtDict['HCl']
+
+    assert hcl == 0 or hcl == 1, "hcl pump can either be 0 or 1"
+
+
+
+    # define arrays to hold the output coils, direct inputs, and input registers 
+    '''
+        coils[0] is control to INPUT
+        coils[1] is control to OUTPUT
+        coils[2] is control to HCL
+        coils[3] is control to NAHSO3
+        inputs[0] is state of BRB
+        inputs[1] is state of drain button
+        inputs[2] is state of 'high' sensor
+        inputs[3] is state of 'low' sensor
+        registers[0] is state of water level in tank
+        registers[1] is state of water pH in tank
+    '''
+
+    print(dtDict)
+
 # map from symbolic names of coils, direct inputs, input registers to the
 # index in the tankState array that holds the values
 # Added coils 2 and 3, and register 1
-coilMap =  {'INPUT':0,'OUTPUT':1, 'HCL':2, 'NAHSO3':3}
-inputMap = {'BRB':0,'DRAIN':1,'HIGH':2,'LOW':3}
-registerMap = {'LEVEL':0, 'PH':1}
+coilMap = {'CLIENT-CMD':0}
+inputMap =  {'HCL':0}
+registerMap = {'H-CONCENTRATION':0, "HCL-CONCENTRATION": 1} # CONCENTRATIONs are in mol/L * 10^9
 
-# define arrays to hold the output coils, direct inputs, and input registers 
-'''
-    coils[0] is control to INPUT
-    coils[1] is control to OUTPUT
-    coils[2] is control to HCL
-    coils[3] is control to NAHSO3
-    inputs[0] is state of BRB
-    inputs[1] is state of drain button
-    inputs[2] is state of 'high' sensor
-    inputs[3] is state of 'low' sensor
-    registers[0] is state of water level in tank
-    registers[1] is state of water pH in tank
-'''
-initCoils = [0]*4
-initInputs = [0]*4
-initRegs = [0]*2
-initInputs[2] = 0 if level < highLevel else 1
-initInputs[3] = 0 if level < lowLevel else 1
-initRegs[0] = level
-initRegs[1] = pH
+initCoils = [1]
+initInputs = [0]
+initRegs = [0] * 2
+
 tankState = {'coils':initCoils, 'inputs':initInputs, 'registers':initRegs}
 
 def update_inputs(context):
-    global inputRate, outputRate
+    global inputRate, dilutionRate
+
+    print("Starting update_inputs")
     
     with open(argFile,'r') as rf:
         dtDict = json.load(rf)
 
+    print("Finished json load")
+
     if 'inputRate' in dtDict:
-        inputRate = dtDict['inputRate']
+        inputRate = dtDict['inputRate'] # Rate of HCl entering tank
 
     assert inputRate > 0.0, "inputRate should be positive"
+    print("Finished inputRate")
 
-    if 'outputRate' in dtDict:
-        outputRate = dtDict['outputRate']
+    if 'dilutionRate' in dtDict:
+        dilutionRate = dtDict['dilutionRate'] # Rate of water entering tank
 
-    assert outputRate > 0.0, "outputRate should be positive"
+    assert dilutionRate > 0.0, "dilutionRate should be positive"
+    print("Finished dilutionRate")
 
-    if 'brb' in dtDict:
-        brb = dtDict['brb']
+    if 'HCl' in dtDict:
+        hcl = dtDict['HCl'] # Toggle if HCL is entering system
 
-    assert brb==0 or brb==1, "BRB value should be 0 or 1"
-        
-    if 'drain' in dtDict:
-        drain = dtDict['drain']
+    assert hcl == 0 or hcl == 1, "hcl pump can either be 0 or 1"
+    print("Finished hcl")
 
-    assert drain==0 or drain==1, "DRAIN value should be 0 or 1"
 
-    if 'pH' in dtDict:
-        pH = dtDict['pH'] 
-    
-    assert 0 <= pH <= 14, "pH value should be between 0 and 14"
+    tankState['inputs'][inputMap['HCL']] = 1 if hcl else 0
 
-    tankState['inputs'][inputMap['BRB']] = 1 if brb else 0
-    tankState['inputs'][inputMap['DRAIN']] = 1 if drain else 0
+    print("Finished update_inputs")
 
 def update_tank_state(context):
-    global level
+
+    dissociationRate = 0.5
 
     update_inputs(context)
     print(tankState)
 
-    # increase the tank level only if the INPUT output coil state is on (1) and the Big Red Button is on (1)
-    if tankState['coils'][coilMap['INPUT']] > 0 and tankState['inputs'][inputMap['BRB']] > 0:
-        level += update*inputRate
 
-    # decrease the tank level only if the OUTPUT output coil state is on (1) and the Drain button is on (1)
-    if tankState['coils'][coilMap['OUTPUT']] > 0 and tankState['inputs'][inputMap['DRAIN']] > 0:
-        level -= update*outputRate
+    if tankState['inputs'][inputMap['HCL']]:
+        tankState['registers'][registerMap['HCL-CONCENTRATION']] += inputRate
 
-    # N.B. if we want not both INPUT and OUTPUT to be set, it is the job of the Modbus master to issue
-    # controls to the coils to enforce that.
+    tankState['registers'][registerMap['H-CONCENTRATION']] += dissociationRate * tankState['registers'][registerMap['HCL-CONCENTRATION']]
+    tankState['registers'][registerMap['HCL-CONCENTRATION']]  = (1 - dissociationRate) * tankState['registers'][registerMap['HCL-CONCENTRATION']]
 
-    # if the water level hits 1000 or drops below 0, the
-    # physical protection will change an output coil.  Built-in safety feature for the tank
-    if tankLevels <= level :
-        level = tankLevels
-        tankState['coils'][coilMap['INPUT']] = 0        # turn the input control off
-    elif level <= 0 :
-        level = 0
-        tankState['coils'][coilMap['OUTPUT']] = 0       # turn the output control off
+    tankState['registers'][registerMap['HCL-CONCENTRATION']] = (1 - dilutionRate) * tankState['registers'][registerMap['HCL-CONCENTRATION']]
 
-    # change the state of the input register that records the state of the tank
-    tankState['registers'][registerMap['LEVEL']] = int(level)
-
-    # set the threshold direct inputs
-    tankState['inputs'][inputMap['HIGH']] = 1 if highLevel <= level else 0
-    tankState['inputs'][inputMap['LOW']] = 1 if lowLevel <= level else 0
-
-
-    # change the pH only if HCL is on (1)
-    # change the pH only if NAHSO3 is on (1)
+    print("Finished update_tank_state")
 
 
 async def updating_task(context):
@@ -259,6 +203,10 @@ async def updating_task(context):
 
     slave_id = 0x00
 
+    print("Running updating_task")
+    print(type(context[slave_id]))
+
+
     # set values to initial values. not sure why initial getValues is needed, but server_updating.py has it
     context[slave_id].getValues(rd_reg_as_hex, rd_reg_address, count=len(tankState['registers']))
     context[slave_id].setValues(rd_reg_as_hex, rd_reg_address, tankState['registers'])
@@ -269,9 +217,13 @@ async def updating_task(context):
     context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState['inputs']))
     context[slave_id].setValues(rd_direct_input_as_hex, rd_direct_input_address, tankState['inputs'])
 
+
     # incrementing loop
     while True:
+
+        print("Starting sleep")
         await asyncio.sleep(update)
+        print("Finished sleep")
 
         update_tank_state(context)
 
@@ -282,36 +234,9 @@ async def updating_task(context):
         input_values = context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState['inputs']))
 
         # make the input_values reflect what is in tankState, as these are externally applied
-        input_values[inputMap['BRB']] = tankState['inputs'][inputMap['BRB']]
-        input_values[inputMap['DRAIN']] = tankState['inputs'][inputMap['DRAIN']]
+        input_values[inputMap['HCL']] = tankState['inputs'][inputMap['HCL']]
 
-        # set INPUT coil to OFF if level is at max or if BRB is not on
-        if (tankLevels <= level) or input_values[inputMap['BRB']] == 0 or coil_values[coilMap['INPUT']] == 0:
-            coil_values[coilMap['INPUT']] = 0 
-
-        # set OUTPUT coil to OFF if level is at 0 or if DRAIN is not on
-        if level <=0 or input_values[inputMap['DRAIN']]==0 or coil_values[coilMap['OUTPUT']] == 0:
-            coil_values[coilMap['OUTPUT']] = 0 
-
-        tankState['coils'] = coil_values
-        print("tank coil values", tankState['coils'])
-
-        # save coil updates
-        context[slave_id].setValues(rd_output_coil_as_hex, rd_output_coil_address, tankState['coils'])
-
-        # save the BRB and DRAIN inputs to the tankState
-        tankState['inputs'][inputMap['BRB']] = input_values[inputMap['BRB']]
-        tankState['inputs'][inputMap['DRAIN']] = input_values[inputMap['DRAIN']]
-
-        # the inputs for high and low may have changed though so write the input states back
-        context[slave_id].setValues(rd_direct_input_as_hex, rd_direct_input_address, tankState['inputs'])
-
-        # the input register may have changed
-        context[slave_id].setValues(rd_reg_as_hex, rd_reg_address, tankState['registers'])
-
-        # txt = f"updating_task: updated coil values: {tankState['coils']!s}, input values {tankState['inputs']!s}, register values {tankState['registers']!s}" 
-        #print(txt)
-        #_logger.debug(txt)
+        print("Finished setValues in updating_task")
 
 
 def setup_updating_server(cmdline=None):
@@ -332,14 +257,18 @@ def setup_updating_server(cmdline=None):
 
 async def run_updating_server(args):
     """Start updating_task concurrently with the current task."""
+    print("Starting updating_task")
     task = asyncio.create_task(updating_task(args.context))
+    print("Finished updating_task")
     task.set_name("example updating task")
     await server_async.run_async_server(args)  # start the server
     task.cancel()
 
 
 async def main(cmdline=None):
+    print("Starting setup_updating_server")
     run_args = setup_updating_server(cmdline=cmdline)
+    print("Finishing setup_updating_server")
     await run_updating_server(run_args)
 
 
