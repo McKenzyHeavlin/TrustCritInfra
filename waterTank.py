@@ -58,7 +58,7 @@ from pymodbus.datastore import (
 _logger = logging.getLogger(__name__)
 
 dtDict = {}
-tankState = {}
+# tankState = {}
 argFile = ""
 slave_id = 0x00
 
@@ -77,17 +77,17 @@ update = 1.0            # number of seconds @ tank update
 port = 5020             # TCP over which 
 pH = 7                  # pH level of the water, added for the project
 hcl = 0                 # State of hcl release. 0 = off, 1 = on 
-global inputRate, dilutionRate, tankConcentrations
+global inputRate, dilutionRate, tankState
 inputRate = 0
 dilutionRate = 0 
-tankConcentrations = TankStateClass()
+tankState = TankStateClass()
 
 updates = 0
 def initDT(dtDict):
     global inputRate, dilutionRate
     global port, update
     global pH
-    global tankConcentrations
+    global tankState
 
     print(dtDict)
 
@@ -124,10 +124,10 @@ def initDT(dtDict):
 
     assert hcl == 0 or hcl == 1, "hcl pump can either be 0 or 1"
 
-    tankConcentrations.set_h_concentration(dtDict['hConcentration'])
-    tankConcentrations.set_hcl_concentration(dtDict['hclConcentration'])
+    tankState.set_h_concentration(dtDict['hConcentration'])
+    tankState.set_hcl_concentration(dtDict['hclConcentration'])
 
-    # print("TESTING " + str(tankConcentrations.get_concentrations()))
+    print("TESTING " + str(tankState.get_concentrations()))
 
     # define arrays to hold the output coils, direct inputs, and input registers 
     '''
@@ -146,14 +146,10 @@ def initDT(dtDict):
     print(dtDict)
 
 
-initCoils = [1]
-initInputs = [1]
-initRegs = [0] * 2
 
-tankState = {'coils':initCoils, 'inputs':initInputs, 'registers':initRegs}
 
 def update_inputs(context):
-    global inputRate, dilutionRate
+    global inputRate, dilutionRate, tankState
 
     print("Starting update_inputs")
     
@@ -179,23 +175,23 @@ def update_inputs(context):
     print("Finished hcl")
 
 
-    tankState['inputs'][inputMap['HCL']] = 1 if hcl else 0
+    tankState.set_hcl_input(1 if hcl else 0)
 
     print("Finished update_inputs")
 
 def update_tank_state(context):
-    global inputRate, dilutionRate, tankConcentrations
+    global inputRate, dilutionRate, tankState
 
     update_inputs(context)
 
     print("Starting update_tank_state")
-    print("TESTING " + str(tankConcentrations.get_concentrations()))
+    print("TESTING " + str(tankState.get_concentrations()))
 
     print("inputRate {}, dilutionRate {}".format(inputRate, dilutionRate))
     
-    (tankState['registers'][registerMap['H-CONCENTRATION']], tankState['registers'][registerMap['HCL-CONCENTRATION']]) = tankConcentrations.update_state(tankState, inputRate, dilutionRate)
-    # tankConcentrations.update_state(tankState, inputRate, dilutionRate)
-    # print(tankState)
+    tankState.update_state(inputRate, dilutionRate)
+    # tankState.update_state()
+    print(tankState.get_concentrations())
 
 
     # if tankState['inputs'][inputMap['HCL']]:
@@ -210,6 +206,7 @@ def update_tank_state(context):
 
 
 async def updating_task(context):
+    global tankState
     """Update values in server.
 
     This task runs continuously beside the server
@@ -227,16 +224,21 @@ async def updating_task(context):
     print("Running updating_task")
     print(type(context[slave_id]))
 
+    print("TESTING " + str(tankState.get_concentrations()))
+
+
 
     # set values to initial values. not sure why initial getValues is needed, but server_updating.py has it
-    context[slave_id].getValues(rd_reg_as_hex, rd_reg_address, count=len(tankState['registers']))
-    context[slave_id].setValues(rd_reg_as_hex, rd_reg_address, tankState['registers'])
+    context[slave_id].getValues(rd_reg_as_hex, rd_reg_address, count=len(tankState.get_tank_state()['registers']))
+    print("Finished getValues")
+    context[slave_id].setValues(rd_reg_as_hex, rd_reg_address, tankState.get_tank_state()['registers'])
+    print("Finished setValues")
 
-    context[slave_id].getValues(rd_output_coil_as_hex, rd_output_coil_address, count=len(tankState['coils']))
-    context[slave_id].setValues(rd_output_coil_as_hex, rd_output_coil_address, tankState['coils'])
+    context[slave_id].getValues(rd_output_coil_as_hex, rd_output_coil_address, count=len(tankState.get_tank_state()['coils']))
+    context[slave_id].setValues(rd_output_coil_as_hex, rd_output_coil_address, tankState.get_tank_state()['coils'])
 
-    context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState['inputs']))
-    context[slave_id].setValues(rd_direct_input_as_hex, rd_direct_input_address, tankState['inputs'])
+    context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState.get_tank_state()['inputs']))
+    context[slave_id].setValues(rd_direct_input_as_hex, rd_direct_input_address, tankState.get_tank_state()['inputs'])
 
 
     # incrementing loop
@@ -247,16 +249,16 @@ async def updating_task(context):
         print("Finished sleep")
 
         update_tank_state(context)
-        print(tankState['registers'])
+        print(tankState.get_tank_state()['registers'])
 
         # fetch the coil and direct inputs from the data store
-        coil_values  = context[slave_id].getValues(rd_output_coil_as_hex, rd_output_coil_address, count=len(tankState['coils']))
+        coil_values  = context[slave_id].getValues(rd_output_coil_as_hex, rd_output_coil_address, count=len(tankState.get_tank_state()['coils']))
         print("coil values", coil_values)
 
-        input_values = context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState['inputs']))
+        input_values = context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState.get_tank_state()['inputs']))
 
         # make the input_values reflect what is in tankState, as these are externally applied
-        input_values[inputMap['HCL']] = tankState['inputs'][inputMap['HCL']]
+        input_values[inputMap['HCL']] = tankState.get_tank_state()['inputs'][inputMap['HCL']]
 
         print("Finished setValues in updating_task")
 

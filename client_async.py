@@ -130,7 +130,7 @@ async def run_a_few_calls(client):
         prev_level = 0
         inputGuessRate = 0
         outputGuessRate = 0
-        update = 3.0
+        update = 1.0
         avg_flow_out = 0
 
         while True:
