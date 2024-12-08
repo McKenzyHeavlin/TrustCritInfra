@@ -101,7 +101,7 @@ def initDT(dtDict):
 
     assert dilutionRate > 0.0, "dilutionRate should be positive"
 
-    print("inputRate {}, dilutionRate {}".format(inputRate, dilutionRate))
+    # print("inputRate {}, dilutionRate {}".format(inputRate, dilutionRate))
 
     if updates==0 and 'port' in dtDict:
         port = dtDict['port']
@@ -127,7 +127,7 @@ def initDT(dtDict):
     tankState.set_h_concentration(dtDict['hConcentration'])
     tankState.set_hcl_concentration(dtDict['hclConcentration'])
 
-    print("TESTING " + str(tankState.get_concentrations()))
+    # print("TESTING " + str(tankState.get_concentrations()))
 
     # define arrays to hold the output coils, direct inputs, and input registers 
     '''
@@ -151,12 +151,12 @@ def initDT(dtDict):
 def update_inputs(context):
     global inputRate, dilutionRate, tankState
 
-    print("Starting update_inputs")
+    # print("Starting update_inputs")
     
     with open(argFile,'r') as rf:
         dtDict = json.load(rf)
 
-    print("Finished json load")
+    # print("Finished json load")
 
     if 'inputRate' in dtDict:
         inputRate = dtDict['inputRate'] # Rate of HCl entering tank
@@ -172,26 +172,26 @@ def update_inputs(context):
         hcl = dtDict['HCl'] # Toggle if HCL is entering system
 
     assert hcl == 0 or hcl == 1, "hcl pump can either be 0 or 1"
-    print("Finished hcl")
+    # print("Finished hcl")
 
 
     tankState.set_hcl_input(1 if hcl else 0)
 
-    print("Finished update_inputs")
+    # print("Finished update_inputs")
 
 def update_tank_state(context):
     global inputRate, dilutionRate, tankState
 
     update_inputs(context)
 
-    print("Starting update_tank_state")
-    print("TESTING " + str(tankState.get_concentrations()))
+    # print("Starting update_tank_state")
+    # print("TESTING " + str(tankState.get_concentrations()))
 
-    print("inputRate {}, dilutionRate {}".format(inputRate, dilutionRate))
+    # print("inputRate {}, dilutionRate {}".format(inputRate, dilutionRate))
     
     tankState.update_state(inputRate, dilutionRate)
     # tankState.update_state()
-    print(tankState.get_concentrations())
+    # print(tankState.get_concentrations())
 
 
     # if tankState['inputs'][inputMap['HCL']]:
@@ -202,7 +202,7 @@ def update_tank_state(context):
 
     # tankState['registers'][registerMap['HCL-CONCENTRATION']] = (1 - dilutionRate) * tankState['registers'][registerMap['HCL-CONCENTRATION']]
 
-    print("Finished update_tank_state")
+    # print("Finished update_tank_state")
 
 
 async def updating_task(context):
@@ -221,10 +221,10 @@ async def updating_task(context):
 
     slave_id = 0x00
 
-    print("Running updating_task")
-    print(type(context[slave_id]))
+    # print("Running updating_task")
+    # print(type(context[slave_id]))
 
-    print("TESTING " + str(tankState.get_concentrations()))
+    # print("TESTING " + str(tankState.get_concentrations()))
 
 
 
@@ -242,16 +242,17 @@ async def updating_task(context):
     # incrementing loop
     while True:
 
-        print("Starting sleep")
+        # print("Starting sleep")
         await asyncio.sleep(update)
-        print("Finished sleep")
+        # print("Finished sleep")
 
         update_tank_state(context)
-        print(tankState.get_tank_state()['registers'])
+        print(tankState.get_tank_state())
+        print("")
 
         # fetch the coil and direct inputs from the data store
         coil_values  = context[slave_id].getValues(rd_output_coil_as_hex, rd_output_coil_address, count=len(tankState.get_tank_state()['coils']))
-        print("coil values", coil_values[0])
+        # print("coil values", coil_values[0])
         tankState.set_client_cmd_coil(coil_values[0])
 
         input_values = context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState.get_tank_state()['inputs']))
@@ -259,7 +260,12 @@ async def updating_task(context):
         # make the input_values reflect what is in tankState, as these are externally applied
         input_values[inputMap['HCL']] = tankState.get_tank_state()['inputs'][inputMap['HCL']]
 
-        print("Finished setValues in updating_task")
+        # print("Finished setValues in updating_task")
+
+        context[slave_id].setValues(rd_direct_input_as_hex, rd_direct_input_address, tankState.get_tank_state()['inputs'])
+        context[slave_id].setValues(rd_output_coil_as_hex, rd_output_coil_address, tankState.get_tank_state()['coils'])
+        context[slave_id].setValues(rd_reg_as_hex, rd_reg_address, tankState.get_tank_state()['registers'])
+
 
 
 def setup_updating_server(cmdline=None):
@@ -280,18 +286,18 @@ def setup_updating_server(cmdline=None):
 
 async def run_updating_server(args):
     """Start updating_task concurrently with the current task."""
-    print("Starting updating_task")
+    # print("Starting updating_task")
     task = asyncio.create_task(updating_task(args.context))
-    print("Finished updating_task")
+    # print("Finished updating_task")
     task.set_name("example updating task")
     await server_async.run_async_server(args)  # start the server
     task.cancel()
 
 
 async def main(cmdline=None):
-    print("Starting setup_updating_server")
+    # print("Starting setup_updating_server")
     run_args = setup_updating_server(cmdline=cmdline)
-    print("Finishing setup_updating_server")
+    # print("Finishing setup_updating_server")
     await run_updating_server(run_args)
 
 

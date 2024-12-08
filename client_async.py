@@ -197,6 +197,8 @@ async def run_a_few_calls(client):
         tankState.set_h_concentration(registers[0])
         tankState.set_hcl_concentration(registers[1])
 
+        print(tankState.get_tank_state())
+
         while True:
             await asyncio.sleep(update)
 

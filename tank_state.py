@@ -8,7 +8,7 @@ dissociationRate = 0.5
 global coilMap, inputMap, registerMap, initCoils, initInputs, initRegs
 coilMap = {'CMD':0} # Client cmd to open or close HCl pump
 inputMap =  {'HCL':0} # Actual pump value
-registerMap = {'H-CONCENTRATION':0, "HCL-CONCENTRATION": 1} # CONCENTRATIONs are in mol/L * 10^9
+registerMap = {'H-CONCENTRATION':0, "HCL-CONCENTRATION": 1} # CONCENTRATIONs are in mol/L * 10^11
 
 initCoils = [1]
 initInputs = [1]
@@ -47,15 +47,12 @@ class TankStateClass:
 
         self.tankState['inputs'][inputMap['HCL']] = self.tankState['coils'][coilMap['CMD']]
 
-        print(self.tankState)
-
         if self.tankState['inputs'][inputMap['HCL']]:
-            print("HCL Added")
-            self.tankState['registers'][registerMap['HCL-CONCENTRATION']] += inputRate
+            self.tankState['registers'][registerMap['HCL-CONCENTRATION']] += int(inputRate)
 
-        self.tankState['registers'][registerMap['H-CONCENTRATION']] += dissociationRate * self.tankState['registers'][registerMap['HCL-CONCENTRATION']]
-        self.tankState['registers'][registerMap['HCL-CONCENTRATION']]  = (1 - dissociationRate) * self.tankState['registers'][registerMap['HCL-CONCENTRATION']]
+        self.tankState['registers'][registerMap['H-CONCENTRATION']] += int(dissociationRate * self.tankState['registers'][registerMap['HCL-CONCENTRATION']])
+        self.tankState['registers'][registerMap['HCL-CONCENTRATION']]  = int((1 - dissociationRate) * self.tankState['registers'][registerMap['HCL-CONCENTRATION']])
 
-        self.tankState['registers'][registerMap['HCL-CONCENTRATION']] = (1 - dilutionRate) * self.tankState['registers'][registerMap['HCL-CONCENTRATION']]
+        self.tankState['registers'][registerMap['HCL-CONCENTRATION']] = int((1 - dilutionRate) * self.tankState['registers'][registerMap['HCL-CONCENTRATION']])
 
         return (self.tankState['registers'][registerMap['H-CONCENTRATION']], self.tankState['registers'][registerMap['HCL-CONCENTRATION']])
