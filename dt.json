@@ -2,7 +2,7 @@
 	"inputRate": 500,
 	"dilutionRate": 0.1,
 	"HCl": 1,
-	"update": 1.0,           
+	"update": 0.2,           
 	"port": 5020,
 	"hConcentration": 10000,
 	"hclConcentration": 0

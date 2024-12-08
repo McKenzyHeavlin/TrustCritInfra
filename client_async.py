@@ -187,6 +187,8 @@ async def run_a_few_calls(client):
         count = 3
         set_coil_bool = False
 
+        hConcentrationThreshold = 11000
+
 
         rr = await client.read_coils(0, 1, slave=1)
         output_coils = rr.bits
@@ -198,6 +200,7 @@ async def run_a_few_calls(client):
 
         rr = await client.read_holding_registers(4, 2, slave=1)
         registers = rr.registers
+        prev_registers = registers
         print("Registers {}".format(registers))
 
         tankState = TankStateClass()
@@ -210,9 +213,12 @@ async def run_a_few_calls(client):
         update_inputs()
 
         while True:
-            await asyncio.sleep(update)
+            await asyncio.sleep(update / 5)
 
-            count -= 1
+            rr = await client.read_holding_registers(4, 2, slave=1)
+            registers = rr.registers
+            if registers == prev_registers:
+                continue
 
             rr = await client.read_coils(0, 1, slave=1)
             output_coils = rr.bits
@@ -222,8 +228,7 @@ async def run_a_few_calls(client):
             discrete_inputs = rr.bits
             # print(discrete_inputs[0])
 
-            rr = await client.read_holding_registers(4, 2, slave=1)
-            registers = rr.registers
+
             print("Tank State      {}".format(registers))
 
             
@@ -242,14 +247,15 @@ async def run_a_few_calls(client):
 
             # Get current state of the system from the coils and registers
 
-            if count == 0:
-                set_input = not discrete_inputs[0]
-                count = 3
-                await client.write_coil(0, set_input, slave=1)
-                tankState.set_client_cmd_coil(set_input)
-                # tankState.set_hcl_input(set_input)
-            # else:
-                # set_input = discrete_inputs[0]
+            if tankState.predict_next_state(inputRate, dilutionRate, update)[0] > hConcentrationThreshold:
+                await client.write_coil(0, False, slave=1)
+                tankState.set_client_cmd_coil(False)
+            else:
+                await client.write_coil(0, True, slave=1)
+                tankState.set_client_cmd_coil(True)
+            
+
+            prev_registers = registers
 
 
 

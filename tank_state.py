@@ -39,8 +39,22 @@ class TankStateClass:
     def get_tank_state(self):
         return self.tankState
 
-    # def update_state(self, dilutionRate):
 
+    def predict_next_state(self, inputRate, dilutionRate, updateRate):
+        hcl_input = self.tankState['coils'][coilMap['CMD']]
+
+        hclConcentration = self.tankState['registers'][registerMap['HCL-CONCENTRATION']]
+
+        if hcl_input:
+            hclConcentration += int(inputRate * updateRate)
+            
+        hConcentration = self.tankState['registers'][registerMap['H-CONCENTRATION']] + int(dissociationRate * updateRate * hclConcentration)
+        hclConcentration = int((1 - dissociationRate * updateRate) * hclConcentration)
+
+        hConcentration = int((1 - dilutionRate * updateRate)*hConcentration + dilutionRate * updateRate * 10000)
+        hclConcentration = int((1 - dilutionRate * updateRate) * hclConcentration)
+
+        return (hConcentration, hclConcentration)
 
     def update_state(self, inputRate, dilutionRate, updateRate):
 
