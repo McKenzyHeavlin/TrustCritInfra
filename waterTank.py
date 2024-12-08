@@ -230,9 +230,7 @@ async def updating_task(context):
 
     # set values to initial values. not sure why initial getValues is needed, but server_updating.py has it
     context[slave_id].getValues(rd_reg_as_hex, rd_reg_address, count=len(tankState.get_tank_state()['registers']))
-    print("Finished getValues")
     context[slave_id].setValues(rd_reg_as_hex, rd_reg_address, tankState.get_tank_state()['registers'])
-    print("Finished setValues")
 
     context[slave_id].getValues(rd_output_coil_as_hex, rd_output_coil_address, count=len(tankState.get_tank_state()['coils']))
     context[slave_id].setValues(rd_output_coil_as_hex, rd_output_coil_address, tankState.get_tank_state()['coils'])

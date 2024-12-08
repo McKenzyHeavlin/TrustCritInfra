@@ -30,6 +30,9 @@ import asyncio
 import logging
 import sys
 import pdb
+import os
+import json
+from tank_state import *
 
 try:
     import helper
@@ -43,18 +46,37 @@ import pymodbus.client as modbusClient
 from pymodbus import ModbusException
 
 
+global dtDict
+global argFile, inputRate, dilutionRate
+
 _logger = logging.getLogger(__file__)
 logging.basicConfig(filename='async_client.log', level=logging.DEBUG)
 _logger.setLevel("DEBUG")
 
 
+
+
 def setup_async_client(description=None, cmdline=None):
+    global dtDict, argFile
     """Run client setup."""
     args = helper.get_commandline(
         server=False, description=description, cmdline=cmdline
     )
+
+    if args.file != None:
+        argFile = os.path.join('.', args.file)
+        try:
+            with open(argFile,'r') as rf:
+                dtDict = json.load(rf)
+        except:
+            print("error opening argument file {}\n".format(argFile))
+            exit(1)
+
     _logger.info("### Create client object")
     client = None
+
+
+
     if args.comm == "tcp":
         client = modbusClient.AsyncModbusTcpClient(
             args.host,
@@ -123,7 +145,28 @@ async def run_async_client(client, modbus_calls=None):
     _logger.info("### End of Program")
 
 
+def update_inputs():
+    global dtDict, argFile, inputRate, dilutionRate
+
+    with open(argFile,'r') as rf:
+        dtDict = json.load(rf)
+
+    print("Finished json load")
+
+    if 'inputRate' in dtDict:
+        inputRate = dtDict['inputRate'] # Rate of HCl entering tank
+
+    assert inputRate > 0.0, "inputRate should be positive"
+
+    if 'dilutionRate' in dtDict:
+        dilutionRate = dtDict['dilutionRate'] # Rate of water entering tank
+
+    assert dilutionRate > 0.0, "dilutionRate should be positive"
+
+
 async def run_a_few_calls(client):
+    global dtDict, argFile, inputRate, dilutionRate
+
     """Test connection works."""
     try:
         guard = False
@@ -133,8 +176,16 @@ async def run_a_few_calls(client):
         update = 1.0
         avg_flow_out = 0
 
+        tankState = TankStateClass()
+        tankState.set_h_concentration(dtDict['hConcentration'])
+        tankState.set_hcl_concentration(dtDict['hclConcentration'])
+
         while True:
             await asyncio.sleep(update)
+
+            update_inputs()
+            tankState.update_state(inputRate, dilutionRate)
+            print(tankState.get_concentrations())
 
             # Get current state of the system from the coils and registers
             rr = await client.read_coils(0, 1, slave=1)
@@ -150,9 +201,10 @@ async def run_a_few_calls(client):
 async def main(cmdline=None):
     """Combine setup and run."""
     testclient = setup_async_client(description="Run client.", cmdline=cmdline)
-    print
     await run_async_client(testclient, modbus_calls=run_a_few_calls)
 
 
+
 if __name__ == "__main__":
+
     asyncio.run(main(), debug=True)

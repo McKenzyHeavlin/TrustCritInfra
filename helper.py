@@ -63,6 +63,13 @@ def get_commandline(server=False, description=None, extras=None, cmdline=None):
         default=None,
         type=str,
     )
+    parser.add_argument(
+        "--file",
+        help="set config file",
+        dest="file",
+        default=None,
+        type=str,
+    )
     if server:
         parser.add_argument(
             "--store",
