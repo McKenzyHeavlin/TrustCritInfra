@@ -33,6 +33,7 @@ import pdb
 import os
 import json
 from tank_state import *
+from detector import *
 
 try:
     import helper
@@ -47,7 +48,7 @@ from pymodbus import ModbusException
 
 
 global dtDict
-global argFile, inputRate, dilutionRate
+global argFile, inputRate, dilutionRate, update
 
 _logger = logging.getLogger(__file__)
 logging.basicConfig(filename='async_client.log', level=logging.DEBUG)
@@ -146,7 +147,7 @@ async def run_async_client(client, modbus_calls=None):
 
 
 def update_inputs():
-    global dtDict, argFile, inputRate, dilutionRate
+    global dtDict, argFile, inputRate, dilutionRate, update
 
     with open(argFile,'r') as rf:
         dtDict = json.load(rf)
@@ -162,9 +163,19 @@ def update_inputs():
 
     assert dilutionRate > 0.0, "dilutionRate should be positive"
 
+    if 'update' in dtDict:
+        update = dtDict['update']
+
+    assert 0.0 < update < 10.0, "update should be positive and less than 10 seconds"
+
 
 async def run_a_few_calls(client):
-    global dtDict, argFile, inputRate, dilutionRate
+    global dtDict, argFile, inputRate, dilutionRate, update
+
+    statelessDetector = StatelessDetector(threshold = 50)
+    statefulDetector = StatefulDetector(threshold = 50)
+
+    statefulDetector.set_delta(1)
 
     """Test connection works."""
     try:
@@ -172,10 +183,11 @@ async def run_a_few_calls(client):
         prev_level = 0
         inputGuessRate = 0
         outputGuessRate = 0
-        update = 1.0
         avg_flow_out = 0
         count = 3
         set_coil_bool = False
+
+        hConcentrationThreshold = 11000
 
 
         rr = await client.read_coils(0, 1, slave=1)
@@ -188,6 +200,7 @@ async def run_a_few_calls(client):
 
         rr = await client.read_holding_registers(4, 2, slave=1)
         registers = rr.registers
+        prev_registers = registers
         print("Registers {}".format(registers))
 
         tankState = TankStateClass()
@@ -197,38 +210,52 @@ async def run_a_few_calls(client):
         tankState.set_hcl_concentration(registers[1])
 
         print(tankState.get_tank_state())
+        update_inputs()
 
         while True:
-            await asyncio.sleep(update)
-
-            count -= 1
-
-            rr = await client.read_coils(0, 1, slave=1)
-            output_coils = rr.bits
-            print(output_coils[0])
-
-            rr = await client.read_discrete_inputs(2, 1, slave=1)
-            discrete_inputs = rr.bits
-            print(discrete_inputs[0])
+            await asyncio.sleep(update / 5)
 
             rr = await client.read_holding_registers(4, 2, slave=1)
             registers = rr.registers
-            print("Registers {}".format(registers))
+            if registers == prev_registers:
+                continue
 
-            update_inputs()
-            tankState.update_state(inputRate, dilutionRate)
-            print(tankState.get_concentrations())
+            rr = await client.read_coils(0, 1, slave=1)
+            output_coils = rr.bits
+            # print(output_coils[0])
+
+            rr = await client.read_discrete_inputs(2, 1, slave=1)
+            discrete_inputs = rr.bits
+            # print(discrete_inputs[0])
+
+
+            print("Tank State      {}".format(registers))
+
+            
+            tankState.update_state(inputRate, dilutionRate, update)
+            predicted_reg = tankState.get_concentrations()
+            print("Predicted State {}".format(predicted_reg))
+            print("")
+
+            #Stateless detection
+            if statelessDetector.detect(registers[0], predicted_reg[0]):
+                print("ALERT: Stateless detector")
+
+            #Stateful detection
+            if statefulDetector.detect(registers[0], predicted_reg[0]):
+                print("ALERT: Stateful detector")
 
             # Get current state of the system from the coils and registers
 
-            if count == 0:
-                set_input = not discrete_inputs[0]
-                count = 3
-                await client.write_coil(0, set_input, slave=1)
-                tankState.set_client_cmd_coil(set_input)
-                # tankState.set_hcl_input(set_input)
-            # else:
-                # set_input = discrete_inputs[0]
+            if tankState.predict_next_state(inputRate, dilutionRate, update)[0] > hConcentrationThreshold:
+                await client.write_coil(0, False, slave=1)
+                tankState.set_client_cmd_coil(False)
+            else:
+                await client.write_coil(0, True, slave=1)
+                tankState.set_client_cmd_coil(True)
+            
+
+            prev_registers = registers
 
 
 

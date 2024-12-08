@@ -180,7 +180,7 @@ def update_inputs(context):
     # print("Finished update_inputs")
 
 def update_tank_state(context):
-    global inputRate, dilutionRate, tankState
+    global inputRate, dilutionRate, tankState, update
 
     update_inputs(context)
 
@@ -189,7 +189,7 @@ def update_tank_state(context):
 
     # print("inputRate {}, dilutionRate {}".format(inputRate, dilutionRate))
     
-    tankState.update_state(inputRate, dilutionRate)
+    tankState.update_state(inputRate, dilutionRate, update)
     # tankState.update_state()
     # print(tankState.get_concentrations())
 
