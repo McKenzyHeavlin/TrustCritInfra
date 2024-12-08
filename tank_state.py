@@ -6,7 +6,7 @@ dissociationRate = 0.5
 # index in the tankState array that holds the values
 # Added coils 2 and 3, and register 1
 global coilMap, inputMap, registerMap, initCoils, initInputs, initRegs
-coilMap = {'CLIENT-CMD':0} # Client cmd to open or close HCl pump
+coilMap = {'CMD':0} # Client cmd to open or close HCl pump
 inputMap =  {'HCL':0} # Actual pump value
 registerMap = {'H-CONCENTRATION':0, "HCL-CONCENTRATION": 1} # CONCENTRATIONs are in mol/L * 10^9
 
@@ -23,6 +23,9 @@ class TankStateClass:
     
     def set_hcl_input(self, hcl):
         self.tankState['inputs'][inputMap['HCL']] = hcl
+    
+    def set_client_cmd_coil(self, cmd):
+        self.tankState['coils'][coilMap['CMD']] = cmd
 
     def set_h_concentration(self, h_concentration):
         self.tankState['registers'][registerMap['H-CONCENTRATION']] = h_concentration
@@ -41,10 +44,13 @@ class TankStateClass:
 
     def update_state(self, inputRate, dilutionRate):
 
-        print("Got here")
-        # print("In module {}, {}, {}".format(inputRate, dilutionRate))
+
+        self.tankState['inputs'][inputMap['HCL']] = self.tankState['coils'][coilMap['CMD']]
+
+        print(self.tankState)
 
         if self.tankState['inputs'][inputMap['HCL']]:
+            print("HCL Added")
             self.tankState['registers'][registerMap['HCL-CONCENTRATION']] += inputRate
 
         self.tankState['registers'][registerMap['H-CONCENTRATION']] += dissociationRate * self.tankState['registers'][registerMap['HCL-CONCENTRATION']]

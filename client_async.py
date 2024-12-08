@@ -175,24 +175,62 @@ async def run_a_few_calls(client):
         outputGuessRate = 0
         update = 1.0
         avg_flow_out = 0
+        count = 3
+        set_coil_bool = False
+
+
+        rr = await client.read_coils(0, 1, slave=1)
+        output_coils = rr.bits
+        print(output_coils[0])
+
+        rr = await client.read_discrete_inputs(2, 1, slave=1)
+        discrete_inputs = rr.bits
+        print(discrete_inputs[0])
+
+        rr = await client.read_holding_registers(4, 2, slave=1)
+        registers = rr.registers
+        print("Registers {}".format(registers))
 
         tankState = TankStateClass()
-        tankState.set_h_concentration(dtDict['hConcentration'])
-        tankState.set_hcl_concentration(dtDict['hclConcentration'])
+        tankState.set_client_cmd_coil(output_coils[0])
+        tankState.set_hcl_input(discrete_inputs[0])
+        tankState.set_h_concentration(registers[0])
+        tankState.set_hcl_concentration(registers[1])
 
         while True:
             await asyncio.sleep(update)
+
+            count -= 1
+
+            rr = await client.read_coils(0, 1, slave=1)
+            output_coils = rr.bits
+            print(output_coils[0])
+
+            rr = await client.read_discrete_inputs(2, 1, slave=1)
+            discrete_inputs = rr.bits
+            print(discrete_inputs[0])
+
+            rr = await client.read_holding_registers(4, 2, slave=1)
+            registers = rr.registers
+            print("Registers {}".format(registers))
+
+
 
             update_inputs()
             tankState.update_state(inputRate, dilutionRate)
             print(tankState.get_concentrations())
 
             # Get current state of the system from the coils and registers
-            rr = await client.read_coils(0, 1, slave=1)
-            output_coils = rr.bits
-            print(output_coils[0]) 
-  
-            await client.write_coil(0, not output_coils[0], slave=1)
+
+            if count == 0:
+                set_coil_bool = not output_coils[0]
+                count = 3
+            else:
+                set_coil_bool = output_coils[0]
+
+
+            tankState.set_client_cmd_coil(set_coil_bool)
+            await client.write_coil(0, set_coil_bool, slave=1)
 
     except ModbusException:
         pass

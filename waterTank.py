@@ -251,7 +251,8 @@ async def updating_task(context):
 
         # fetch the coil and direct inputs from the data store
         coil_values  = context[slave_id].getValues(rd_output_coil_as_hex, rd_output_coil_address, count=len(tankState.get_tank_state()['coils']))
-        print("coil values", coil_values)
+        print("coil values", coil_values[0])
+        tankState.set_client_cmd_coil(coil_values[0])
 
         input_values = context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState.get_tank_state()['inputs']))
 

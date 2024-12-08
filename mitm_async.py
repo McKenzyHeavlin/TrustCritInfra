@@ -62,6 +62,8 @@ class MITMModbusProxy:
 
                 # TODO: Manipulate the client data here, if desired
 
+                print(data)
+
                 # Forward to the server
                 server_writer.write(data)
                 await server_writer.drain()
