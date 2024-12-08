@@ -39,6 +39,7 @@ import pdb
 import random
 import json
 import pymodbus
+from tank_state import *
 
 try:
     import server_async
@@ -76,13 +77,31 @@ update = 1.0            # number of seconds @ tank update
 port = 5020             # TCP over which 
 pH = 7                  # pH level of the water, added for the project
 hcl = 0                 # State of hcl release. 0 = off, 1 = on 
-
-
+global inputRate, dilutionRate, tankConcentrations
+inputRate = 0
+dilutionRate = 0 
+tankConcentrations = TankStateClass()
 
 updates = 0
 def initDT(dtDict):
-    global inputRate, outputRate, port, update, brb, drain
-    global tankLevels, level, highLevel, lowLevel, pH
+    global inputRate, dilutionRate
+    global port, update
+    global pH
+    global tankConcentrations
+
+    print(dtDict)
+
+    if 'inputRate' in dtDict:
+        inputRate = dtDict['inputRate'] # Rate of HCl entering tank
+
+    assert inputRate > 0.0, "inputRate should be positive"
+
+    if 'dilutionRate' in dtDict:
+        dilutionRate = dtDict['dilutionRate'] # Rate of water entering tank
+
+    assert dilutionRate > 0.0, "dilutionRate should be positive"
+
+    print("inputRate {}, dilutionRate {}".format(inputRate, dilutionRate))
 
     if updates==0 and 'port' in dtDict:
         port = dtDict['port']
@@ -105,7 +124,10 @@ def initDT(dtDict):
 
     assert hcl == 0 or hcl == 1, "hcl pump can either be 0 or 1"
 
+    tankConcentrations.set_h_concentration(dtDict['hConcentration'])
+    tankConcentrations.set_hcl_concentration(dtDict['hclConcentration'])
 
+    # print("TESTING " + str(tankConcentrations.get_concentrations()))
 
     # define arrays to hold the output coils, direct inputs, and input registers 
     '''
@@ -123,15 +145,9 @@ def initDT(dtDict):
 
     print(dtDict)
 
-# map from symbolic names of coils, direct inputs, input registers to the
-# index in the tankState array that holds the values
-# Added coils 2 and 3, and register 1
-coilMap = {'CLIENT-CMD':0}
-inputMap =  {'HCL':0}
-registerMap = {'H-CONCENTRATION':0, "HCL-CONCENTRATION": 1} # CONCENTRATIONs are in mol/L * 10^9
 
 initCoils = [1]
-initInputs = [0]
+initInputs = [1]
 initRegs = [0] * 2
 
 tankState = {'coils':initCoils, 'inputs':initInputs, 'registers':initRegs}
@@ -150,13 +166,11 @@ def update_inputs(context):
         inputRate = dtDict['inputRate'] # Rate of HCl entering tank
 
     assert inputRate > 0.0, "inputRate should be positive"
-    print("Finished inputRate")
 
     if 'dilutionRate' in dtDict:
         dilutionRate = dtDict['dilutionRate'] # Rate of water entering tank
 
     assert dilutionRate > 0.0, "dilutionRate should be positive"
-    print("Finished dilutionRate")
 
     if 'HCl' in dtDict:
         hcl = dtDict['HCl'] # Toggle if HCL is entering system
@@ -170,20 +184,27 @@ def update_inputs(context):
     print("Finished update_inputs")
 
 def update_tank_state(context):
-
-    dissociationRate = 0.5
+    global inputRate, dilutionRate, tankConcentrations
 
     update_inputs(context)
-    print(tankState)
+
+    print("Starting update_tank_state")
+    print("TESTING " + str(tankConcentrations.get_concentrations()))
+
+    print("inputRate {}, dilutionRate {}".format(inputRate, dilutionRate))
+    
+    (tankState['registers'][registerMap['H-CONCENTRATION']], tankState['registers'][registerMap['HCL-CONCENTRATION']]) = tankConcentrations.update_state(tankState, inputRate, dilutionRate)
+    # tankConcentrations.update_state(tankState, inputRate, dilutionRate)
+    # print(tankState)
 
 
-    if tankState['inputs'][inputMap['HCL']]:
-        tankState['registers'][registerMap['HCL-CONCENTRATION']] += inputRate
+    # if tankState['inputs'][inputMap['HCL']]:
+    #     tankState['registers'][registerMap['HCL-CONCENTRATION']] += inputRate
 
-    tankState['registers'][registerMap['H-CONCENTRATION']] += dissociationRate * tankState['registers'][registerMap['HCL-CONCENTRATION']]
-    tankState['registers'][registerMap['HCL-CONCENTRATION']]  = (1 - dissociationRate) * tankState['registers'][registerMap['HCL-CONCENTRATION']]
+    # tankState['registers'][registerMap['H-CONCENTRATION']] += dissociationRate * tankState['registers'][registerMap['HCL-CONCENTRATION']]
+    # tankState['registers'][registerMap['HCL-CONCENTRATION']]  = (1 - dissociationRate) * tankState['registers'][registerMap['HCL-CONCENTRATION']]
 
-    tankState['registers'][registerMap['HCL-CONCENTRATION']] = (1 - dilutionRate) * tankState['registers'][registerMap['HCL-CONCENTRATION']]
+    # tankState['registers'][registerMap['HCL-CONCENTRATION']] = (1 - dilutionRate) * tankState['registers'][registerMap['HCL-CONCENTRATION']]
 
     print("Finished update_tank_state")
 
@@ -226,6 +247,7 @@ async def updating_task(context):
         print("Finished sleep")
 
         update_tank_state(context)
+        print(tankState['registers'])
 
         # fetch the coil and direct inputs from the data store
         coil_values  = context[slave_id].getValues(rd_output_coil_as_hex, rd_output_coil_address, count=len(tankState['coils']))
