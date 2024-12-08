@@ -246,24 +246,26 @@ async def updating_task(context):
         await asyncio.sleep(update)
         # print("Finished sleep")
 
-        update_tank_state(context)
-        print(tankState.get_tank_state())
-        print("")
+
 
         # fetch the coil and direct inputs from the data store
         coil_values  = context[slave_id].getValues(rd_output_coil_as_hex, rd_output_coil_address, count=len(tankState.get_tank_state()['coils']))
         # print("coil values", coil_values[0])
         tankState.set_client_cmd_coil(coil_values[0])
 
-        input_values = context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState.get_tank_state()['inputs']))
+        update_tank_state(context)
+        print(tankState.get_tank_state())
+        print("")
+
+        # input_values = context[slave_id].getValues(rd_direct_input_as_hex, rd_direct_input_address, count=len(tankState.get_tank_state()['inputs']))
 
         # make the input_values reflect what is in tankState, as these are externally applied
-        input_values[inputMap['HCL']] = tankState.get_tank_state()['inputs'][inputMap['HCL']]
+        # input_values[inputMap['HCL']] = tankState.get_tank_state()['inputs'][inputMap['HCL']]
 
         # print("Finished setValues in updating_task")
 
         context[slave_id].setValues(rd_direct_input_as_hex, rd_direct_input_address, tankState.get_tank_state()['inputs'])
-        context[slave_id].setValues(rd_output_coil_as_hex, rd_output_coil_address, tankState.get_tank_state()['coils'])
+        # context[slave_id].setValues(rd_output_coil_as_hex, rd_output_coil_address, tankState.get_tank_state()['coils'])
         context[slave_id].setValues(rd_reg_as_hex, rd_reg_address, tankState.get_tank_state()['registers'])
 
 

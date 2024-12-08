@@ -151,7 +151,6 @@ def update_inputs():
     with open(argFile,'r') as rf:
         dtDict = json.load(rf)
 
-    print("Finished json load")
 
     if 'inputRate' in dtDict:
         inputRate = dtDict['inputRate'] # Rate of HCl entering tank
@@ -216,8 +215,6 @@ async def run_a_few_calls(client):
             registers = rr.registers
             print("Registers {}".format(registers))
 
-
-
             update_inputs()
             tankState.update_state(inputRate, dilutionRate)
             print(tankState.get_concentrations())
@@ -225,14 +222,18 @@ async def run_a_few_calls(client):
             # Get current state of the system from the coils and registers
 
             if count == 0:
-                set_coil_bool = not output_coils[0]
+                set_input = not discrete_inputs[0]
                 count = 3
-            else:
-                set_coil_bool = output_coils[0]
+                await client.write_coil(0, set_input, slave=1)
+                tankState.set_client_cmd_coil(set_input)
+                # tankState.set_hcl_input(set_input)
+            # else:
+                # set_input = discrete_inputs[0]
 
 
-            tankState.set_client_cmd_coil(set_coil_bool)
-            await client.write_coil(0, set_coil_bool, slave=1)
+
+
+            
 
     except ModbusException:
         pass
