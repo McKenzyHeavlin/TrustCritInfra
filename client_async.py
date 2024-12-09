@@ -178,7 +178,7 @@ async def run_a_few_calls(client):
     statelessDetector = StatelessDetector(threshold = 500)
     statefulDetector = StatefulDetector(threshold = 500)
 
-    statefulDetector.set_delta(1)
+    statefulDetector.set_delta(10)
 
     """Test connection works."""
     try:
