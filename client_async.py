@@ -190,8 +190,8 @@ async def run_a_few_calls(client):
         count = 3
         set_coil_bool = False
 
-        hConcentrationThresholdHigh = 13000
-        hConcentrationThresholdLow = 11000
+        hConcentrationThresholdHigh = 13000 # this should be roughly a pH of 7.05
+        hConcentrationThresholdLow = 11000 # pH of 6.95
         curCoilState = True
 
 
