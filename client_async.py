@@ -172,8 +172,8 @@ def update_inputs():
 async def run_a_few_calls(client):
     global dtDict, argFile, inputRate, dilutionRate, update
 
-    statelessDetector = StatelessDetector(threshold = 50)
-    statefulDetector = StatefulDetector(threshold = 50)
+    statelessDetector = StatelessDetector(threshold = 500)
+    statefulDetector = StatefulDetector(threshold = 500)
 
     statefulDetector.set_delta(1)
 
@@ -187,7 +187,9 @@ async def run_a_few_calls(client):
         count = 3
         set_coil_bool = False
 
-        hConcentrationThreshold = 11000
+        hConcentrationThresholdHigh = 13000
+        hConcentrationThresholdLow = 11000
+        curCoilState = True
 
 
         rr = await client.read_coils(0, 1, slave=1)
@@ -213,12 +215,12 @@ async def run_a_few_calls(client):
         update_inputs()
 
         while True:
-            await asyncio.sleep(update / 5)
+            await asyncio.sleep(update)
 
             rr = await client.read_holding_registers(4, 2, slave=1)
             registers = rr.registers
-            if registers == prev_registers:
-                continue
+            # if registers == prev_registers:
+            #     continue
 
             rr = await client.read_coils(0, 1, slave=1)
             output_coils = rr.bits
@@ -247,12 +249,14 @@ async def run_a_few_calls(client):
 
             # Get current state of the system from the coils and registers
 
-            if tankState.predict_next_state(inputRate, dilutionRate, update)[0] > hConcentrationThreshold:
-                await client.write_coil(0, False, slave=1)
-                tankState.set_client_cmd_coil(False)
-            else:
-                await client.write_coil(0, True, slave=1)
-                tankState.set_client_cmd_coil(True)
+            if curCoilState == True and tankState.predict_next_state(inputRate, dilutionRate, update)[0] > hConcentrationThresholdHigh:
+                curCoilState = False
+                await client.write_coil(0, curCoilState, slave=1)
+                tankState.set_client_cmd_coil(curCoilState)
+            elif curCoilState == False and tankState.predict_next_state(inputRate, dilutionRate, update)[0] < hConcentrationThresholdLow:
+                curCoilState = True
+                await client.write_coil(0, curCoilState, slave=1)
+                tankState.set_client_cmd_coil(curCoilState)
             
 
             prev_registers = registers

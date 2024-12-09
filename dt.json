@@ -1,8 +1,8 @@
 { 
-	"inputRate": 500,
-	"dilutionRate": 0.1,
+	"inputRate": 3000,
+	"dilutionRate": 0.3,
 	"HCl": 1,
-	"update": 0.2,           
+	"update": 1,           
 	"port": 5020,
 	"hConcentration": 10000,
 	"hclConcentration": 0

