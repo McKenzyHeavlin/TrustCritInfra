@@ -38,7 +38,7 @@ from pymodbus.constants import Endian
 
 
 _logger = logging.getLogger(__file__)
-logging.basicConfig(filename='mitm_async.log', level=logging.DEBUG)
+logging.basicConfig(filename='logs/mitm_async.log', level=logging.DEBUG)
 _logger.setLevel("DEBUG")
 
 # Host and Port information to create the MITM
@@ -116,7 +116,7 @@ class MITMModbusProxy:
                     current_time = time.time()
                     pH_value = -math.log10(spoofed_state['registers'][0])
                     pump_state = spoofed_state['inputs'][0]
-                    with open("mitm_ph_data.csv", mode='a', newline='') as f:
+                    with open("data/mitm_ph_data.csv", mode='a', newline='') as f:
                         ph_writer = csv.writer(f)
                         ph_writer.writerow([current_time, pH_value,pump_state])
                 
@@ -316,7 +316,7 @@ def update_inputs():
     assert 0.0 < update < 10.0, "update should be positive and less than 10 seconds"
 
 if __name__ == "__main__":
-    with open("mitm_ph_data.csv", mode="w", newline="") as f:
+    with open("data/mitm_ph_data.csv", mode="w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Time (s)", "actual_pH", "HCl_pump_state"]) #csv header
     argFile = 'dt.json'

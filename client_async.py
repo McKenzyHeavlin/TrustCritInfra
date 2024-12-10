@@ -54,7 +54,7 @@ global dtDict
 global argFile, inputRate, dilutionRate, update
 
 _logger = logging.getLogger(__file__)
-logging.basicConfig(filename='async_client.log', level=logging.DEBUG)
+logging.basicConfig(filename='logs/async_client.log', level=logging.DEBUG)
 _logger.setLevel("DEBUG")
 
 
@@ -266,7 +266,7 @@ async def run_a_few_calls(client):
                 tankState.set_client_cmd_coil(curCoilState)
             
             pump_state = tankState.get_tank_state()['inputs'][0]
-            with open("ph_data.csv", mode='a', newline='') as f:
+            with open("data/ph_data.csv", mode='a', newline='') as f:
                 ph_writer = csv.writer(f)
                 ph_writer.writerow([current_time, pH_value,pump_state])
             prev_registers = registers
@@ -288,7 +288,7 @@ async def main(cmdline=None):
 
 
 if __name__ == "__main__":
-    with open("ph_data.csv", mode="w", newline="") as f:
+    with open("data/ph_data.csv", mode="w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Time (s)", "actual_pH", "HCl_pump_state"]) #csv header
     asyncio.run(main(), debug=True)
