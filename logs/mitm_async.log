@@ -1,0 +1,724 @@
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/mitm_async.py:### Create client object
+INFO:/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/mitm_async.py:### MITM starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=2, type=1, proto=6, laddr=('127.0.0.1', 50020), raddr=('127.0.0.1', 5020)> connected to 127.0.0.1:5020: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x73d6178af620>)
+INFO:/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/mitm_async.py:### End of Program
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/mitm_async.py", line 53, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/mitm_async.py", line 53, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/mitm_async.py", line 53, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/mitm_async.py", line 53, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:pymodbus.logging:[1, 0, 4, 257, 257]
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport closed fd=8>
+Traceback (most recent call last):
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 93, in proxy
+    exit()
+  File "<frozen _sitebuiltins>", line 26, in __call__
+SystemExit: None
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport closed fd=8>
+Traceback (most recent call last):
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 104, in proxy
+    exit()
+  File "<frozen _sitebuiltins>", line 26, in __call__
+SystemExit: None
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport closed fd=8>
+Traceback (most recent call last):
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 109, in proxy
+    exit()
+  File "<frozen _sitebuiltins>", line 26, in __call__
+SystemExit: None
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport closed fd=8>
+Traceback (most recent call last):
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 113, in proxy
+    exit()
+  File "<frozen _sitebuiltins>", line 26, in __call__
+SystemExit: None
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport closed fd=8>
+Traceback (most recent call last):
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 113, in proxy
+    exit()
+  File "<frozen _sitebuiltins>", line 26, in __call__
+SystemExit: None
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport closed fd=8>
+Traceback (most recent call last):
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 113, in proxy
+    exit()
+  File "<frozen _sitebuiltins>", line 26, in __call__
+SystemExit: None
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport closed fd=8>
+Traceback (most recent call last):
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 109, in proxy
+    exit()
+  File "<frozen _sitebuiltins>", line 26, in __call__
+SystemExit: None
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 58, in proxy
+    server_reader, server_writer = await asyncio.open_connection(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1121, in create_connection
+    raise exceptions[0]
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1103, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1006, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 651, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/selector_events.py", line 691, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 5020)
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport closed fd=8>
+Traceback (most recent call last):
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 80, in proxy
+    manipulated_data = self.transform_client_data(parsed_data_map) if changeData else data
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 147, in transform_client_data
+    exit()
+  File "<frozen _sitebuiltins>", line 26, in __call__
+SystemExit: None
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport closed fd=8>
+Traceback (most recent call last):
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/home/mckenzy/anaconda3/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 91, in proxy
+    exit()
+  File "<frozen _sitebuiltins>", line 26, in __call__
+SystemExit: None
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+ERROR:asyncio:Unhandled exception in client_connected_cb
+transport: <_SelectorSocketTransport fd=8 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/home/mckenzy/Desktop/Illinois/FALL2024/CS598/SemesterProject/TrustCritInfra/mitm_async.py", line 135, in proxy
+    writer.close()
+    ^^^^^^^^^^^^
+AttributeError: '_csv.writer' object has no attribute 'close'
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:asyncio:Using selector: EpollSelector
