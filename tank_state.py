@@ -1,6 +1,7 @@
 
 global dissociationRate
 dissociationRate = 0.2
+dilution_h_concentration = 8000
 
 # map from symbolic names of coils, direct inputs, input registers to the
 # index in the tankState array that holds the values
@@ -42,7 +43,6 @@ class TankStateClass:
 
     def predict_next_state(self, inputRate, dilutionRate, updateRate):
         hcl_input = self.tankState['coils'][coilMap['CMD']]
-
         hclConcentration = self.tankState['registers'][registerMap['HCL-CONCENTRATION']]
 
         if hcl_input:
@@ -51,14 +51,12 @@ class TankStateClass:
         hConcentration = self.tankState['registers'][registerMap['H-CONCENTRATION']] + int(dissociationRate * updateRate * hclConcentration)
         hclConcentration = int((1 - dissociationRate * updateRate) * hclConcentration)
 
-        hConcentration = int((1 - dilutionRate * updateRate)*hConcentration + dilutionRate * updateRate * 10000)
+        hConcentration = int((1 - dilutionRate * updateRate)*hConcentration + dilutionRate * updateRate * dilution_h_concentration)
         hclConcentration = int((1 - dilutionRate * updateRate) * hclConcentration)
 
         return (hConcentration, hclConcentration)
 
     def update_state(self, inputRate, dilutionRate, updateRate):
-
-
         self.tankState['inputs'][inputMap['HCL']] = self.tankState['coils'][coilMap['CMD']]
 
         if self.tankState['inputs'][inputMap['HCL']]:
@@ -68,7 +66,7 @@ class TankStateClass:
         self.tankState['registers'][registerMap['HCL-CONCENTRATION']]  = int((1 - dissociationRate * updateRate) * self.tankState['registers'][registerMap['HCL-CONCENTRATION']])
 
         self.tankState['registers'][registerMap['H-CONCENTRATION']] = int((1 - dilutionRate * updateRate)*self.tankState['registers'][registerMap['H-CONCENTRATION']] + \
-                                                                          dilutionRate * updateRate * 10000)
+                                                                          dilutionRate * updateRate * dilution_h_concentration)
         self.tankState['registers'][registerMap['HCL-CONCENTRATION']] = int((1 - dilutionRate * updateRate) * self.tankState['registers'][registerMap['HCL-CONCENTRATION']])
 
         return (self.tankState['registers'][registerMap['H-CONCENTRATION']], self.tankState['registers'][registerMap['HCL-CONCENTRATION']])

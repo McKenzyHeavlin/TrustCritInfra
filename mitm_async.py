@@ -108,8 +108,6 @@ class MITMModbusProxy:
                         spoofedTankState.set_h_concentration(parsed_response_map["register_data"][0])
                         spoofedTankState.set_hcl_concentration(parsed_response_map["register_data"][1])
                     count = count - 1
-                    if count == 0:
-                        print(spoofedTankState.get_tank_state())
                 
                 manipulated_data = self.transform_server_data(parsed_response_map, spoofedTankState) if changeData else response
                 
