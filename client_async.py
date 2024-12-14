@@ -52,6 +52,7 @@ from pymodbus import ModbusException
 
 global dtDict
 global argFile, inputRate, dilutionRate, update
+global delta
 
 _logger = logging.getLogger(__file__)
 logging.basicConfig(filename='logs/async_client.log', level=logging.DEBUG)
@@ -61,7 +62,7 @@ _logger.setLevel("DEBUG")
 
 
 def setup_async_client(description=None, cmdline=None):
-    global dtDict, argFile
+    global dtDict, argFile, delta
     """Run client setup."""
     args = helper.get_commandline(
         server=False, description=description, cmdline=cmdline
@@ -79,7 +80,7 @@ def setup_async_client(description=None, cmdline=None):
     _logger.info("### Create client object")
     client = None
 
-
+    delta = args.delta
 
     if args.comm == "tcp":
         client = modbusClient.AsyncModbusTcpClient(
@@ -173,12 +174,12 @@ def update_inputs():
 
 
 async def run_a_few_calls(client):
-    global dtDict, argFile, inputRate, dilutionRate, update
+    global dtDict, argFile, inputRate, dilutionRate, update, delta
 
     statelessDetector = StatelessDetector(threshold = 2000)
     statefulDetector = StatefulDetector(threshold = 2000)
 
-    statefulDetector.set_delta(50)
+    statefulDetector.set_delta(delta)
 
     """Test connection works."""
     try:
@@ -255,7 +256,11 @@ async def run_a_few_calls(client):
 
             #Stateful detection
             if statefulDetector.detect(registers[0], predicted_reg[0]):
-                print("ALERT: Stateful detector")
+                print("ALERT: Stateful detector: {}".format(statefulDetector.get_deviation()))
+                with open("data.txt", "a") as file:
+                    file.write("Delta: {}, Deviation: {}\n".format(statefulDetector.get_delta(), statefulDetector.get_deviation()))
+                sys.exit()
+
 
             # Get current state of the system from the coils and registers
 

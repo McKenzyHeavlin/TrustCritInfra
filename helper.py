@@ -70,6 +70,11 @@ def get_commandline(server=False, description=None, extras=None, cmdline=None):
         default=None,
         type=str,
     )
+    parser.add_argument(
+        "--delta",
+        default=0,
+        type=int,
+    )
     if server:
         parser.add_argument(
             "--store",
