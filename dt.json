@@ -1,9 +1,10 @@
 { 
-	"inputRate": 3000,
+	"inputRate": 7000,
 	"dilutionRate": 0.3,
 	"HCl": 1,
-	"update": 0.7,           
+	"update": 0.1,           
 	"port": 5020,
 	"hConcentration": 10000,
-	"hclConcentration": 0
+	"hclConcentration": 0,
+	"trigger": 1
 }

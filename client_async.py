@@ -175,10 +175,10 @@ def update_inputs():
 async def run_a_few_calls(client):
     global dtDict, argFile, inputRate, dilutionRate, update
 
-    statelessDetector = StatelessDetector(threshold = 500)
-    statefulDetector = StatefulDetector(threshold = 500)
+    statelessDetector = StatelessDetector(threshold = 2000)
+    statefulDetector = StatefulDetector(threshold = 2000)
 
-    statefulDetector.set_delta(10)
+    statefulDetector.set_delta(50)
 
     """Test connection works."""
     try:
@@ -218,7 +218,7 @@ async def run_a_few_calls(client):
         update_inputs()
 
         while True:
-            await asyncio.sleep(update)
+            await asyncio.sleep(update * 10)
 
             rr = await client.read_holding_registers(4, 2, slave=1)
             registers = rr.registers
@@ -226,8 +226,11 @@ async def run_a_few_calls(client):
             #     continue
 
             rr = await client.read_coils(0, 1, slave=1)
-            output_coils = rr.bits
+            output_coil = rr.bits[0]
             # print(output_coils[0])
+
+            tankState.set_client_cmd_coil(output_coil)
+            # curCoilState = output_coil
 
             rr = await client.read_discrete_inputs(2, 1, slave=1)
             discrete_inputs = rr.bits
@@ -256,25 +259,22 @@ async def run_a_few_calls(client):
 
             # Get current state of the system from the coils and registers
 
-            if curCoilState == True and tankState.predict_next_state(inputRate, dilutionRate, update)[0] > hConcentrationThresholdHigh:
-                curCoilState = False
-                await client.write_coil(0, curCoilState, slave=1)
-                tankState.set_client_cmd_coil(curCoilState)
-            elif curCoilState == False and tankState.predict_next_state(inputRate, dilutionRate, update)[0] < hConcentrationThresholdLow:
-                curCoilState = True
-                await client.write_coil(0, curCoilState, slave=1)
-                tankState.set_client_cmd_coil(curCoilState)
+            if registers[0] > hConcentrationThresholdHigh:
+                # curCoilState = False
+                await client.write_coil(0, False, slave=1)
+                print("Turning coil off")
+                # tankState.set_client_cmd_coil(curCoilState)
+            elif registers[0] < hConcentrationThresholdLow:
+                # curCoilState = True
+                await client.write_coil(0, True, slave=1)
+                print("Turning coil on")
+                # tankState.set_client_cmd_coil(curCoilState)
             
             pump_state = tankState.get_tank_state()['inputs'][0]
             with open("data/ph_data.csv", mode='a', newline='') as f:
                 ph_writer = csv.writer(f)
                 ph_writer.writerow([current_time, pH_value,pump_state])
             prev_registers = registers
-
-
-
-
-            
 
     except ModbusException:
         pass

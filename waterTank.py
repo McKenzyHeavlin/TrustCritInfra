@@ -243,7 +243,7 @@ async def updating_task(context):
     while True:
 
         # print("Starting sleep")
-        await asyncio.sleep(update)
+        await asyncio.sleep(update * 10)
         # print("Finished sleep")
 
 
