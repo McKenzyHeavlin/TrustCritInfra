@@ -2558,3 +2558,303 @@ INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client objec
 INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
 DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 47188), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f6971e6b340>)
 DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 49450), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f41c0baf340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 37960), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f5675077340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 59302), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fe9fe52f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 50552), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f1c2365f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 39490), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f1b53dbb340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 45622), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f9b57da3340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 60648), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7efeff307340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 43920), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f6c0b66b340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 60614), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f714ead7340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 53030), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f9460c9f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 42924), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f5d456b7340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 56964), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f6f78cd7340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 44864), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f0e4d49f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51474), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fba53d83340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 56028), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fcb6775b340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 59264), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f43a2f87340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 45886), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fedbbbdf340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 52388), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fb046dfb340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35810), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f3cf966f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 37200), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fd5dfc17340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 38694), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fce6ecb3340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35770), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fc1eea7f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 47840), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f23d1ddf340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 59912), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f558844f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 40810), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f4c37293340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 40780), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fa01493f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 48874), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fec40a93340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 34522), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f0cbe12f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 33942), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f03c5bcb340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 33704), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fd24db0b340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 60024), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f701e8af340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 48012), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f80d02d7340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 52458), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fece3a93340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 59334), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f430fedb340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35548), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f4f1b8e3340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 40782), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f165206f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51454), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f93256f7340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 47992), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fefed5cb340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 36960), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f2c173f7340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35638), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f8998387340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 56580), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fd9181eb340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 59502), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f6098b7f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 43270), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fc256fd3340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 55370), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f874510b340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 41322), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f61ded23340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 47348), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fa0000d7340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 49102), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f4abe4eb340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 44642), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f3630dd3340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 52454), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f239e407340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 54130), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f47afb3b340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 48098), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f6bf7fc3340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 42080), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f3510d6b340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 37340), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f3d6d653340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 57270), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f205097b340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 34270), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f930e537340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 41464), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f066e10f340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35164), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f33c6c13340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51496), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7ff64f2cb340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 41270), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7f6d14653340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Create client object
+INFO:/home/patrick/ece598/TrustCritInfra/client_async.py:### Client starting
+DEBUG:asyncio:<asyncio.TransportSocket fd=7, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 58420), raddr=('127.0.0.1', 5030)> connected to 127.0.0.1:5030: (<_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>, <pymodbus.client.modbusclientprotocol.ModbusClientProtocol object at 0x7fe4be8ef340>)
+DEBUG:asyncio:Close <_UnixSelectorEventLoop running=False closed=False debug=True>
